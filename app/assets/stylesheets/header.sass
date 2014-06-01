@@ -1,0 +1,83 @@
+///TOP BAR SECTION///
+$primary-color: #FFA07A
+$secondary-color: #006699
+.top-bar,.top-bar.expanded .title-area,.top-bar-section ul li > a,.top-bar-section ul li
+  background-color: white
+
+.top-bar.expanded
+  .top-bar-section .divider
+    border-top: solid 1px white
+
+.top-bar-section li:not(.has-form) a:not(.button):hover
+  background: $secondary-color
+  color: $primary-color
+
+.top-bar-section .dropdown li:not(.has-form) a:not(.button)
+  background: white
+  color: $secondary-color
+
+.top-bar-section .dropdown li:not(.has-form) a:not(.button):hover
+  background: $primary-color
+  color: $secondary-color
+
+.top-bar-section ul li:hover:not(.has-form) > a
+  background-color: $primary-color
+
+.top-bar
+  ul.title-area:hover
+    color: red
+
+.top-bar-section .has-dropdown
+  a
+    background-color: white
+  ul li:hover:not(.has-form) > a
+    background-color: white
+
+//back button
+.top-bar-section .dropdown li.title h5 a
+  background-color: white
+
+.nav-font, .menu-icon
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif
+  -webkit-font-smoothing: antialiased
+  $shadow: scale-color($secondary-color , $lightness: -50%)
+  text-shadow: 0 -1px rgba(0, 0, 0, .3)
+  font-weight: normal
+  font-size: 20px
+  color: $primary-color
+
+.top-bar .toggle-topbar a,.top-bar-section ul li > a, .top-bar-section .dropdown li.title h5 a
+  color: $primary-color
+
+.top-bar.expanded .toggle-topbar a,.top-bar-section ul li:hover:not(.has-form) > a
+  color: $secondary-color
+  span
+    color: $secondary-color
+
+.menu_icon
+  font-weight: normal
+  font-size: 20px
+  padding-left: 10px
+  margin-top: 10px
+
+
+.hover, .not-click:hover > .dropdown
+  opacity: 1
+
+
+
+.dropdown
+  opacity: 0
+
+.no-js .top-bar-section .has-dropdown :hover  > .dropdown
+  opacity: 1
+
+
+
+.top_bar_divider
+  border: 1px solid lightgray
+  margin-left: 20px
+  margin-right: 20px
+
+///TOP BAR SECTION END///
+
