@@ -1,2 +1,12 @@
-h1 Users#show
-p Find me in app/views/users/show.html.slim
+.right
+  - if user_signed_in?
+    = render 'shared/follow_form' , user: @user
+  .profile_main_pic
+    = image_tag @user.avatar.url(:thumb), class: 'profile'
+span.left
+  h4
+    = @user.name
+.profile_space[style="padding-bottom:200px"]
+.row.feed
+  - @activities.order("created_at desc").each do |activity|
+    = render_activity(activity)

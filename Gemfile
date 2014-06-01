@@ -8,7 +8,7 @@ gem 'foundation-rails'
 # app gems
 gem 'devise'
 gem 'socialization'
-gem 'paperclip'
+gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'public_activity'
 
 gem 'rails', '4.1.1'
