@@ -1,12 +1,24 @@
-p#notice = notice
-
+p#notice
+  = notice
+.user-box
+  = image_tag @post.user.avatar.url(:thumb), class: 'profile'
+  | &nbsp;&nbsp;
+  = link_to @post.user.name, @post.user
 p
-  strong User:
-  = @post.user_id
-p
-  strong Content:
+  | &nbsp;&nbsp;&nbsp;
   = @post.content
-
-= link_to 'Edit', edit_post_path(@post)
-'|
-= link_to 'Back', posts_path
+div[style="padding-bottom:100px"]
+.activity_feed
+= image_tag @post.avatar.url if @post.avatar.exists?
+|  <div class="
+= @post.class
+| -
+= @post.id
+| ">
+= render 'shared/like_form', likeable: @post
+.likes
+= link_to pluralize(@comments.count, 'comment'), @post, class: 'comments'
+| &nbsp;&nbsp;
+= pluralize(@post.likers(User).count, 'like')
+= render 'shared/form'
+= render @comments

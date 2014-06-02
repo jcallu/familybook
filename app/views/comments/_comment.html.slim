@@ -1,0 +1,13 @@
+.row
+  .like_post
+    //= image_tag comment.user.avatar.url, class: 'profile'
+    - unless current_page?(root_url)
+      = link_to comment.user.name
+    /| &nbsp;&nbsp;&nbsp;
+    - if current_page?(root_url)
+      .photo_caption
+        = comment.content
+    - else
+      .comment_section
+        = comment.content
+    div[style="padding-bottom:50px"]

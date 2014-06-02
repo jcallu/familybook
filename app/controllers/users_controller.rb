@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :follow, :unfollow]
-  around_action :set_likeable_type, only: [:like, :unlike]
+  before_action :set_user, only: [:show]
   # GET /users
   # GET /users.json
   def index
@@ -26,23 +25,29 @@ class UsersController < ApplicationController
   end
 
   def follow
-    @user = User.find(user_params)
-	  current_user.follow!(@user)
+	  current_user.follow!(User.find(params[:user]))
   end
 
   def unfollow
-    @user = User.find(user_params)
-	  current_user.unfollow!(@user)
+	  current_user.unfollow!(User.find(params[:user]))
   end
 
   def like
-    @likeable_type == "Post" ? find_post_likeable_id : find_comment_likeable_id
-    current_user.like!(@likeable_id)
+    if params[:likeable_type] == "Post"
+      @likeable = Post.find(params[:likeable_id])
+    else
+      @likeable = Comment.find(params[:likeable_id])
+    end
+  	current_user.like!(@likeable)
   end
 
   def unlike
-    @likeable_type == "Post" ? find_post_likeable_id : find_comment_likeable_id
-    current_user.unlike!(@likeable_id)
+    if params[:likeable_type] == "Post"
+      @likeable = Post.find(params[:likeable_id])
+    else
+      @likeable = Comment.find(params[:likeable_id])
+    end
+	  current_user.unlike!(@likeable)
   end
 
   private
@@ -54,17 +59,5 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me, :avatar)
-    end
-
-    def set_likeable_type
-      @likeable_type = params[:likeable_type]
-    end
-
-    def find_post_likeable_id
-      @likeable_id = Post.find(params[:likeable_id])
-    end
-
-    def find_comment_likeable_id
-      @likeable_id = Comment.find(params[:likeable_id])
     end
 end

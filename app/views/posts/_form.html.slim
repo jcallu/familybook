@@ -1,15 +1,16 @@
-= form_for @post do |f|
+= form_for @post, html: { multipart: true } do |f|
   - if @post.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
+      h2
+        = pluralize(@post.errors.count, "error")
+        |  prohibited this post from being saved:
       ul
-        - @post.errors.full_messages.each do |message|
-          li = message
-
+        - @post.errors.full_messages.each do |msg|
+          li
+            = msg
+  br
   .field
-    = f.label :user_id
-    = f.number_field :user_id
-  .field
-    = f.label :content
-    = f.text_area :content
-  .actions = f.submit 'Save'
+    = f.text_area :content, :placeholder => "What's on your mind?"
+    = f.file_field :avatar, :multiple => false
+  .actions
+    = f.submit class: 'small button', :value => "Post"

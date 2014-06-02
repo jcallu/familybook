@@ -1,0 +1,35 @@
+.user-box
+
+  = image_tag post.user.avatar.url(:medium), class: 'profile_post'
+
+  | &nbsp; &nbsp;
+  = link_to post.user.name, post.user
+
+.like_post
+  - if post.avatar.exists?
+    .photo_caption
+      = post.content
+    .posted_photo
+      = image_tag post.avatar.url
+  - unless post.avatar.exists?
+    .post
+      = post.content
+  |  <div class="
+  = post.class
+  | -
+  = post.id
+  | ">
+  = render 'shared/like_form', likeable: post, style: 'font-size:12px;'
+
+= link_to 'Write a comment.', post, class: 'comments', style: 'font-size:12px;margin-left:0px;'
+br
+br
+.comment-link
+  = pluralize(post.comments.count, 'comment')
+  | &nbsp; &nbsp;&nbsp; &nbsp;
+  = pluralize(post.likers(User).count, 'like')
+
+- unless post.avatar.exists?
+  div[style="padding-bottom: 30px"]
+- else
+  div[style="padding-bottom: 20px"]

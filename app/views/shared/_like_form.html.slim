@@ -1,0 +1,6 @@
+- if user_signed_in?
+  #like_form[style="a{ font-color:black }"]
+    - if current_user.likes?(likeable)
+      = render 'shared/unlike', likeable: likeable
+    - else
+      = render 'shared/like', likeable: likeable
