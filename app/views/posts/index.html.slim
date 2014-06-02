@@ -7,8 +7,8 @@ table
     th
       | Content
     th
-    th
-    th
+    /th
+    /th
   - @posts.each do |post|
     tr
       td
@@ -19,9 +19,9 @@ table
         = image_tag post.avatar.url if post.avatar.exists?
       td
         = link_to 'Show', post
-      td
+      /td
         = link_to 'Edit', edit_post_path(post)
-      td
+      /td
         = link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }
 br
 = link_to 'New Post', new_post_path

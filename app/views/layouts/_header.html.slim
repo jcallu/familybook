@@ -2,13 +2,11 @@ nav.top-bar data-topbar=""
   ul.title-area
     li.name
       h1
-        a[ href="/" ]
-          span.nav-font Callubook
+        a href="/" Callubook
     - if user_signed_in?
-      li.toggle-topbar
-        a[href="#"]
-          span.nav-font  Menu
-          i.fi-list.menu_icon
+      li.toggle-topbar.menu-icon
+        a href="#"
+          span Menu
   section.top-bar-section
     - if user_signed_in?
       ul.right
@@ -27,4 +25,3 @@ nav.top-bar data-topbar=""
         li.divider
         li
           = link_to 'Sign out', destroy_user_session_path , method: :delete
-.top_bar_divider 

@@ -10,7 +10,8 @@
     .photo_caption
       = post.content
     .posted_photo
-      = image_tag post.avatar.url
+      = image_tag post.avatar.url(:post)
+    br
   - unless post.avatar.exists?
     .post
       = post.content

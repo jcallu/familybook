@@ -1,4 +1,7 @@
-= render 'posts/form'
+- if user_signed_in?
+  = render 'posts/form'
+  - @activities.order("created_at desc").each do |activity|
+     = render_activity(activity)
 
-- @activities.order("created_at desc").each do |activity|
-  = render_activity(activity)
+/ debug
+/= @debug.methods

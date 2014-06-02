@@ -3,9 +3,10 @@
     .user-box
       = image_tag activity.owner.avatar.url(:thumb), class: 'like_profile'
       | &nbsp;&nbsp;&nbsp;
-      = link_to activity.owner.name, activity.owner
-      |  commented on&nbsp;
-      = link_to "Post", activity.trackable.post
+      .info
+        = link_to activity.owner.name, activity.owner
+        |  commented on&nbsp;
+        = link_to "Post", activity.trackable.post
     .like_post.commented_a_post
       = render 'comments/comment', comment: activity.trackable
   div[style="padding-bottom: 10px"]
