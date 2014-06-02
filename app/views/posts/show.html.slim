@@ -10,7 +10,7 @@ p
     = @post.content
 div[style="padding-bottom:100px"]
 .activity_feed
-= image_tag @post.avatar.url(:post) if @post.avatar.exists?
+= image_tag @post.avatar.url if @post.avatar.exists?
 |  <div class="
 = @post.class
 | -
