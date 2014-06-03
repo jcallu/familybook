@@ -10,11 +10,11 @@
     .photo_caption
       = post.content
     .posted_photo
-      = image_tag post.avatar.url(:medium)
+      = image_tag post.avatar.url(:original)
     br
   - unless post.avatar.exists?
     .post
-      = post.content
+      = simple_format(post.content).html_safe
   |  <div class="
   = post.class
   | -

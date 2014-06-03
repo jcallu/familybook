@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   acts_as_followable
   acts_as_likeable
   acts_as_liker
-  has_attached_file :avatar, :styles => { :medium => "400x400!", :thumb => "150x150!" },   
+  has_attached_file :avatar, :styles => {:original => "400x400!", :thumb => "100x100!" },   
     :default_url => "/system/avatars/:style/missing.png",
     :url  => "/system/avatars/:id/:style_:filename",
     :path => ":rails_root/public/system/avatars/:id/:style_:filename",

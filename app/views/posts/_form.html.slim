@@ -10,7 +10,7 @@
             = msg
   br
   .field
-    = f.text_area :content, :placeholder => "What's on your mind?"
+    = f.text_area :content, value: (@post.content || "").gsub(/\n/, "'\n'") ,:placeholder => "What's on your mind?"
     = f.file_field :avatar, :multiple => false
   .actions
     = f.submit class: 'small button', :value => "Post"

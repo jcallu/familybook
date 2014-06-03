@@ -7,10 +7,10 @@ p#notice
 p
   | &nbsp;&nbsp;&nbsp;
   .photo_caption
-    = @post.content
+    = simple_format(@post.content).html_safe
 div[style="padding-bottom:100px"]
 .activity_feed
-= image_tag @post.avatar.url(:medium) if @post.avatar.exists?
+= image_tag @post.avatar.url(:original) if @post.avatar.exists?
 |  <div class="
 = @post.class
 | -

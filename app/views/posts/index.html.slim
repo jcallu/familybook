@@ -1,5 +1,5 @@
 h1
-  | Listing posts
+  | Posts listing
 table
   tr
     th
@@ -8,21 +8,24 @@ table
       | Post Content
     th
       | Post Photo
+    th
     /th
-    /th
-  - @posts.each do |post|
+  - @posts.order("created_at desc").each do |post|
     tr
       td
         = post.user.name
       td
-        = post.content
+        = simple_format(post.content).html_safe
       td
-        = image_tag post.avatar.url(:medium) if post.avatar.exists?
+        = image_tag post.avatar.url(:thumb) if post.avatar.exists?
       td
         = link_to 'Show', post
-      /td
-        = link_to 'Edit', edit_post_path(post)
+
+      td
+        - if User.find_by_name(current_user.name).id == post.user.id
+          = link_to 'Edit', edit_post_path(post)
       /td
         = link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }
-br
-= link_to 'New Post', new_post_path
+.new_post1[style="padding-top: 20px;margin-bottom: 100px"]
+  = link_to 'New Post', new_post_path, style: 'font-size: 30px'
+

@@ -6,8 +6,8 @@
     /| &nbsp;&nbsp;&nbsp;
     - if current_page?(root_url)
       .photo_caption
-        = comment.content
+        = simple_format(comment.content).html_safe
     - else
       .comment_section
-        = comment.content
+        = simple_format(comment.content).html_safe
     div[style="padding-bottom:50px"]

@@ -17,6 +17,8 @@ html[lang="en"]
       - if alert
         p.alert-box.error
           = alert
+      
       .large-8.columns
+        .top_bar_divider.bar
         = yield
-        = javascript_include_tag "application"
+        = javascript_include_tag "application"  
