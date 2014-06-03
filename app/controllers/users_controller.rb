@@ -25,11 +25,13 @@ class UsersController < ApplicationController
   end
 
   def follow
-	  current_user.follow!(User.find(params[:user]))
+    @user = User.find(params[:user])
+	  current_user.follow!(@user)
   end
 
   def unfollow
-	  current_user.unfollow!(User.find(params[:user]))
+    @user = User.find(params[:user])
+	  current_user.unfollow!(@user)
   end
 
   def like

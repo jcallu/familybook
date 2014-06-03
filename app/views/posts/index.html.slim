@@ -3,20 +3,21 @@ h1
 table
   tr
     th
-      | User
+      | Family Member
     th
-      | Content
+      | Post Content
     th
+      | Post Photo
     /th
     /th
   - @posts.each do |post|
     tr
       td
-        = post.user_id
+        = post.user.name
       td
         = post.content
       td
-        = image_tag post.avatar.url if post.avatar.exists?
+        = image_tag post.avatar.url(:medium) if post.avatar.exists?
       td
         = link_to 'Show', post
       /td

@@ -2,5 +2,5 @@
   .user-box.user
     .right
       = render 'shared/follow_form', user: user
-    = image_tag user.avatar.url(:medium), class: 'profile'
+    = image_tag user.avatar.url(:thumb), class: 'profile'
     = link_to user.name, user

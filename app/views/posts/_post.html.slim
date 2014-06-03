@@ -1,6 +1,6 @@
 .user-box
 
-  = image_tag post.user.avatar.url(:medium), class: 'profile_post'
+  = image_tag post.user.avatar.url(:thumb), class: 'profile_post'
 
   | &nbsp; &nbsp;
   = link_to post.user.name, post.user
@@ -10,7 +10,7 @@
     .photo_caption
       = post.content
     .posted_photo
-      = image_tag post.avatar.url
+      = image_tag post.avatar.url(:medium)
     br
   - unless post.avatar.exists?
     .post
