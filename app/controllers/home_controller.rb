@@ -10,5 +10,13 @@ class HomeController < ApplicationController
     @activities = PublicActivity::Activity.where(owner_id: followees_ids, owner_type: "User")
     end
   end
+  
+  def debug
+    @post_id = 16
+    @post = Post.find(@post_id)
+    @comments = Comment.where("post_id == #{@post_id} ")
+    @comment_activities = PublicActivity::Activity.where("key == 'comment.create' AND trackable_id IN #{@comments.pluck(:id).to_s.gsub("[","(").gsub("]",")") }")
+    PublicActivity::Activity.destroy(@comment_activities.pluck(:id))
+  end
 end
 

@@ -3,15 +3,19 @@ h1
 table
   tr
     th
+      | post trackable_id
+    th
       | Family Member
     th
       | Post Content
     th
       | Post Photo
     th
-    /th
+    th
   - @posts.order("created_at desc").each do |post|
     tr
+      td
+        = post.id
       td
         = post.user.name
       td
@@ -24,8 +28,9 @@ table
       td
         - if User.find_by_name(current_user.name).id == post.user.id
           = link_to 'Edit', edit_post_path(post)
-      /td
-        = link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }
+      td
+        = link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' }
 .new_post1[style="padding-top: 20px;margin-bottom: 100px"]
   = link_to 'New Post', new_post_path, style: 'font-size: 30px'
+
 
