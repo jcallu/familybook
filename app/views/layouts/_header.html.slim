@@ -19,7 +19,7 @@ nav.top-bar data-topbar=""
         li
           = link_to 'Family Members', users_path
         li.has-dropdown
-          = link_to 'My Profile'
+          a[href="#"] My Profile
           ul.dropdown
             li
               = link_to current_user.name, current_user

@@ -16,10 +16,12 @@ div[style="padding-bottom:100px"]
 | -
 = @post.id
 | ">
-= render 'shared/like_form', likeable: @post
-.likes
-= link_to pluralize(@comments.count, 'comment'), @post, class: 'comments'
-| &nbsp;&nbsp;
-= pluralize(@post.likers(User).count, 'like')
+
+= render 'shared/like_form', likeable: @post 
+.likes_box[style= "float: left"]
+  = link_to pluralize(@comments.count, 'comment'), @post, class: 'comments', style: 'float: left'
+.likes[style="padding-left: 100px"]
+  = pluralize(@post.likers(User).count, 'like')
+
 = render 'shared/form'
 = render @comments

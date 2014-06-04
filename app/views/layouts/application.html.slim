@@ -7,6 +7,7 @@ html[lang="en"]
       = content_for?(:title) ? yield(:title) : "Familybook"
     = stylesheet_link_tag    "application"
     = javascript_include_tag "vendor/modernizr"
+    = javascript_include_tag "application"
     = csrf_meta_tags
   body
     = render 'layouts/header'
@@ -21,4 +22,3 @@ html[lang="en"]
       .large-8.columns
         .top_bar_divider.bar
         = yield
-        = javascript_include_tag "application"  
