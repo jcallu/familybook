@@ -11,9 +11,10 @@ gem 'socialization'
 gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'public_activity'
 
+gem 'pg',           group: :production
 gem 'rails', '4.1.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'sqlite3',      group: :development
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use slim for template
