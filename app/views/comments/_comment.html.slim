@@ -1,8 +1,10 @@
 .row
   .like_post
-    //= image_tag comment.user.avatar.url, class: 'profile'
-    - unless current_page?(root_url)
+    - if @post_type == "Post"
+      = image_tag comment.user.avatar.url(:thumb), class: 'profile', style: 'width: 30px; height: 30px;margin-right: 10px'
       = link_to comment.user.name
+      br
+      br
     /| &nbsp;&nbsp;&nbsp;
     - if current_page?(root_url)
       .photo_caption
@@ -10,4 +12,4 @@
     - else
       .comment_section
         = simple_format(comment.content).html_safe
-    div[style="padding-bottom:50px"]
+    div[style="padding-bottom:5px"]

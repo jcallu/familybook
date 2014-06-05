@@ -1,6 +1,7 @@
 ///TOP BAR SECTION///
-$primary-color: #FFA07A
-$secondary-color: #006699
+$primary-color: #006699
+$secondary-color: scale-color($primary-color , $lightness: +90%)
+
 .top-bar,.top-bar.expanded .title-area,.top-bar-section ul li > a,.top-bar-section ul li
   background-color: white
 
@@ -14,7 +15,7 @@ $secondary-color: #006699
 
 .top-bar-section .dropdown li:not(.has-form) a:not(.button)
   background: white
-  color: $secondary-color
+  color: $primary-color
 
 .top-bar-section .dropdown li:not(.has-form) a:not(.button):hover
   background: $primary-color
@@ -23,9 +24,6 @@ $secondary-color: #006699
 .top-bar-section ul li:hover:not(.has-form) > a
   background-color: $primary-color
 
-.top-bar
-  ul.title-area:hover
-    color: red
 
 .top-bar-section .has-dropdown
   a
@@ -51,9 +49,9 @@ $secondary-color: #006699
   color: $primary-color
 
 .top-bar.expanded .toggle-topbar a,.top-bar-section ul li:hover:not(.has-form) > a
-  color: $secondary-color
+  color: scale-color($primary-color , $lightness: -50%)
   span
-    color: $secondary-color
+    color: scale-color($primary-color , $lightness: -50%)
 
 .menu_icon
   font-weight: normal

@@ -1,4 +1,6 @@
 - if activity.trackable
+  - @post_type_like = "Like"
+  - @post_type = "Post"
   .activity_feed
     .user-box
       = image_tag activity.owner.avatar.url(:thumb), class: 'like_profile'
@@ -9,3 +11,4 @@
         = link_to activity.trackable.likeable.class, activity.trackable.likeable
     .like_post.liked_a_post
       = render 'posts/post', post: activity.trackable.likeable
+  - @post_type = "Post"

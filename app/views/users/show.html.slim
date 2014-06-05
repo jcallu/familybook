@@ -1,11 +1,11 @@
 .right
-  - if user_signed_in?
-    = render 'shared/follow_form' , user: @user
   .profile_main_pic
-    = image_tag @user.avatar.url(:thumb), class: 'profile'
+    = image_tag @user.avatar.url(:original), class: 'profile'
 span.left
   h4
     = @user.name
+- if user_signed_in?
+    = render 'shared/follow_form' , user: @user
 .profile_space[style="padding-bottom:200px"]
 .row.feed
   - @activities.order("created_at desc").each do |activity|

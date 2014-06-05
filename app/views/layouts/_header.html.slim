@@ -2,9 +2,8 @@
 nav.top-bar data-topbar=""
   ul.title-area
     li.name
-      h1
-        a[ href="/" ]
-          span.nav-font Familybook
+      a[href="/" style="padding-left: 20px"]
+        img[src="/family-book-logo.png" style="width:42px; height:42px; z-index: 999999"]
     - if user_signed_in?
       li.toggle-topbar
         a[href="#"]
@@ -19,12 +18,13 @@ nav.top-bar data-topbar=""
         li
           = link_to 'Family Members', users_path
         li.has-dropdown
-          a[href="#"] My Profile
+          = link_to current_user.name, current_user
           ul.dropdown
             li
-              = link_to current_user.name, current_user
+
+              = link_to "My Profile", current_user
             li
-              = link_to 'Edit', edit_user_registration_path
+              = link_to 'Edit Profile', edit_user_registration_path
         li.divider
         li
           = link_to 'Sign out', destroy_user_session_path , method: :delete

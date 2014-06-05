@@ -10,6 +10,6 @@
             = msg
   = f.hidden_field :post_id, value: @post.id
   .field
-    = f.text_area :content
+    = f.text_area :content, :placeholder => "Write a comment..."
   .actions
-    = f.submit class: 'small button'
+    = f.submit class: 'small button', value: "Post Comment"

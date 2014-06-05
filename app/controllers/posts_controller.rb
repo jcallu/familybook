@@ -72,12 +72,12 @@ class PostsController < ApplicationController
 
     # Destroy .create and .destroy post activity
     @post_activites = PublicActivity::Activity.where("trackable_type == 'Post' and trackable_id == #{post_id}").pluck(:id)
-    PublicActivity::Activity.destroy(@post_activites) 
+    PublicActivity::Activity.destroy(@post_activites)
 
     # Destroy Post's Comments and their Activity Feed
     @comments = Comment.where("post_id == #{post_id} ").pluck(:id)
     Comment.destroy(@comments)
-    
+
     # Destroy .destroy comment activity
     @comment_activities = PublicActivity::Activity.where("trackable_type == 'Comment' AND trackable_id IN #{@comments.to_s.gsub("[","(").gsub("]",")") }").pluck(:id)
     PublicActivity::Activity.destroy(@comment_activities)

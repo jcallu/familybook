@@ -4,7 +4,7 @@ class Post < ActiveRecord::Base
   validate :content, presence: true
   acts_as_likeable
 
-  has_attached_file :avatar, :styles => {:original => "400x400!", :thumb => "100x100!" },   
+  has_attached_file :avatar, :styles => {:original => "400x", :thumb => "100x100!" },
     :default_url => "/system/posts/:style/missing.png",
     :url  => "/system/posts/:id/:style_:filename",
     :path => ":rails_root/public/system/posts/:id/:style_:filename",

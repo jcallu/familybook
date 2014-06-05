@@ -1,3 +1,4 @@
+- @post_type = "Post"
 p#notice
   = notice
 .user-box
@@ -8,20 +9,26 @@ p
   | &nbsp;&nbsp;&nbsp;
   .photo_caption
     = simple_format(@post.content).html_safe
-div[style="padding-bottom:100px"]
-.activity_feed
+br
+
 = image_tag @post.avatar.url(:original) if @post.avatar.exists?
+br
+br
 |  <div class="
 = @post.class
 | -
 = @post.id
 | ">
 
-= render 'shared/like_form', likeable: @post 
+= render 'shared/like_form', likeable: @post
 .likes_box[style= "float: left"]
   = link_to pluralize(@comments.count, 'comment'), @post, class: 'comments', style: 'float: left'
 .likes[style="padding-left: 100px"]
   = pluralize(@post.likers(User).count, 'like')
-
+.activity_feed[style="border: 1px solid white"]
+.post_comment_section[style="margin-left:13px"]
+  = render @comments
 = render 'shared/form'
-= render @comments
+
+- @post_type = "Post"
+
