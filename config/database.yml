@@ -5,14 +5,13 @@
 #   gem 'sqlite3'
 #
 default: &default
-  encoding: unicode
   adapter: postgresql
-  database: 
   pool: 5
   timeout: 5000
 
 development:
   <<: *default
+  host: localhost
   database: familybook
   username: familybook
   password: familybook1
@@ -20,11 +19,13 @@ development:
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
+#
 test:
   <<: *default
-  database: db/test.pg
+  host: localhost
   username: callubook
   password: callubook
 
 production:
   <<: *default
+  database: myapp_development
