@@ -4,9 +4,8 @@ class HomeController < ApplicationController
       redirect_to new_user_session_path 
     else
     @post = Post.new
-    followees_ids = current_user.followees(User)
+    followees_ids = current_user.followees(User) << current_user.id
     #get only the ids of the people current_user folllows
-    followees_ids << current_user.id
     @activities = PublicActivity::Activity.where(owner_id: followees_ids, owner_type: "User")
     end
   end

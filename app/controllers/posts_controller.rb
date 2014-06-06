@@ -11,7 +11,6 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @comment = Comment.new
-    @post
     @comments = @post.comments
 
     respond_to do |format|
@@ -49,6 +48,7 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
+    post_id = @post.id
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
@@ -58,6 +58,8 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+    @post_activites = PublicActivity::Activity.where("trackable_type = 'Post' AND trackable_id = #{post_id}").pluck(:id).drop(1)
+    PublicActivity::Activity.destroy(@post_activites)    
   end
 
   # DELETE /posts/1
@@ -71,16 +73,18 @@ class PostsController < ApplicationController
     end
 
     # Destroy .create and .destroy post activity
-    @post_activites = PublicActivity::Activity.where("trackable_type == 'Post' and trackable_id == #{post_id}").pluck(:id)
+    @post_activites = PublicActivity::Activity.where("trackable_type = 'Post' AND trackable_id = #{post_id}").pluck(:id)
     PublicActivity::Activity.destroy(@post_activites)
 
     # Destroy Post's Comments and their Activity Feed
-    @comments = Comment.where("post_id == #{post_id} ").pluck(:id)
-    Comment.destroy(@comments)
+    @comments = Comment.where("post_id = #{post_id} ").pluck(:id)
+    unless @comments.empty?
+      Comment.destroy(@comments)
 
-    # Destroy .destroy comment activity
-    @comment_activities = PublicActivity::Activity.where("trackable_type == 'Comment' AND trackable_id IN #{@comments.to_s.gsub("[","(").gsub("]",")") }").pluck(:id)
-    PublicActivity::Activity.destroy(@comment_activities)
+      # Destroy .destroy comment activity
+      @comment_activities = PublicActivity::Activity.where("trackable_type = 'Comment' AND trackable_id IN (#{@comments.to_s.gsub("[","").gsub("]","")} )").pluck(:id)
+      PublicActivity::Activity.destroy(@comment_activities)
+    end
   end
 
   private

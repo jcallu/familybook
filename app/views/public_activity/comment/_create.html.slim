@@ -10,8 +10,8 @@
         = link_to "Post", activity.trackable.post
       
     .like_post.commented_a_post[style="margin-top:-20px"]
-      - @post_type = "Comment"
-      = render 'comments/comment', comment: activity.trackable
+      /- @post_type = "Comment"
+      /= render 'comments/comment', comment: activity.trackable
       br
       br
       - @post_type = "Post"

@@ -37,19 +37,26 @@ class UsersController < ApplicationController
   def like
     if params[:likeable_type] == "Post"
       @likeable = Post.find(params[:likeable_id])
-    else
+      current_user.like!(@likeable)
+
+    elsif params[:likeable_type] == "Comment"
       @likeable = Comment.find(params[:likeable_id])
+  	  current_user.like!(@likeable)
     end
-  	current_user.like!(@likeable)
   end
 
   def unlike
     if params[:likeable_type] == "Post"
       @likeable = Post.find(params[:likeable_id])
-    else
+      current_user.unlike!(@likeable)
+
+      # Clear deleted like activities and its parent creation
+      PublicActivity::Activity.destroy(PublicActivity::Activity.find_by_sql("SELECT act.* FROM activities act LEFT JOIN likes l1 ON l1.\"id\" = act.trackable_id AND act.\"key\" LIKE 'like%' WHERE act.\"key\" LIKE 'like%' AND l1.\"id\" IS NULL").map {|r| r.id})
+      
+    elsif params[:likeable_type] == "Comment"
       @likeable = Comment.find(params[:likeable_id])
+      current_user.unlike!(@likeable)
     end
-	  current_user.unlike!(@likeable)
   end
 
   private
