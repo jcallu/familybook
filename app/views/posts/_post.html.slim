@@ -1,9 +1,7 @@
 .user-box
-
   = image_tag post.user.avatar.url(:thumb), class: 'profile_post'
   | &nbsp; &nbsp;
   = link_to post.user.name, post.user
-
 .like_post
   - if post.avatar.exists?
     .photo_caption
@@ -35,7 +33,10 @@ br
 .comment_in_post[style="padding-left: 12px"]
   = render post.comments
 
+
 - unless post.avatar.exists?
   div[style="padding-bottom: 30px"]
 - else
   div[style="padding-bottom: 20px"]
+
+- @activity_id = 0

@@ -1,3 +1,7 @@
 - if activity.trackable
-  .activity_feed
+  - unless current_page?(root_url)
+    div[style="padding-top:30px"]
+  .activity_feed[style = "background-color: white"]
+    - unless current_page?(root_url)
+      div[style="padding-top:10px"]
     = render 'posts/post', post: activity.trackable

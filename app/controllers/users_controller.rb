@@ -13,7 +13,10 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @activities = PublicActivity::Activity.where(owner_id: @user.id, owner_type: "User")
+    followees_ids = current_user.followees(User).map{|r| r.id }
+    followees_ids << current_user.id
+    @user_id = @user.id if followees_ids.include?(@user.id)
+    @activities = PublicActivity::Activity.where(owner_id: @user_id, owner_type: "User", trackable_type: "Post")
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -22,6 +25,7 @@ class UsersController < ApplicationController
 
   def update
     @user.update_attribute(:avatar,user_params['id'])
+    @user.update_attribute(:name,user_params['id'])
   end
 
   def follow
@@ -52,7 +56,7 @@ class UsersController < ApplicationController
 
       # Clear deleted like activities and its parent creation
       PublicActivity::Activity.destroy(PublicActivity::Activity.find_by_sql("SELECT act.* FROM activities act LEFT JOIN likes l1 ON l1.\"id\" = act.trackable_id AND act.\"key\" LIKE 'like%' WHERE act.\"key\" LIKE 'like%' AND l1.\"id\" IS NULL").map {|r| r.id})
-      
+
     elsif params[:likeable_type] == "Comment"
       @likeable = Comment.find(params[:likeable_id])
       current_user.unlike!(@likeable)

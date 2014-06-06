@@ -3,8 +3,6 @@ h1
 table
   tr
     th
-      | post trackable_id
-    th
       | Family Member
     th
       | Post Content
@@ -15,10 +13,8 @@ table
   - @posts.order("created_at desc").each do |post|
     tr
       td
-        = post.id
-      td
         = post.user.name
-      td
+      td[style="width: 200px"]
         = simple_format(post.content).html_safe
       td
         = image_tag post.avatar.url(:thumb) if post.avatar.exists?

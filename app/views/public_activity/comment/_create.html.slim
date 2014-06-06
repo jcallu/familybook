@@ -8,13 +8,14 @@
         = link_to activity.owner.name, activity.owner
         |  commented on&nbsp;
         = link_to "Post", activity.trackable.post
-      
-    .like_post.commented_a_post[style="margin-top:-20px"]
+
+    .like_post.commented_a_post[style="margin-top:-40px"]
       /- @post_type = "Comment"
       /= render 'comments/comment', comment: activity.trackable
       br
       br
       - @post_type = "Post"
       = render 'posts/post', post: activity.trackable.post
+
   div[style="padding-bottom: 10px"]
   - @post_type = "Post"

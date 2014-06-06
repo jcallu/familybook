@@ -8,7 +8,11 @@ class User < ActiveRecord::Base
 
   has_many :posts
   has_many :comments
-
+  
+  #def to_param
+  #  username
+  #end
+  
   acts_as_follower
   acts_as_followable
   acts_as_likeable

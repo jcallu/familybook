@@ -34,9 +34,10 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
+
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to root_url, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -59,7 +60,7 @@ class PostsController < ApplicationController
       end
     end
     @post_activites = PublicActivity::Activity.where("trackable_type = 'Post' AND trackable_id = #{post_id}").pluck(:id).drop(1)
-    PublicActivity::Activity.destroy(@post_activites)    
+    PublicActivity::Activity.destroy(@post_activites)
   end
 
   # DELETE /posts/1
@@ -68,7 +69,7 @@ class PostsController < ApplicationController
     post_id = @post.id
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: 'Post was successfully Deleted.' }
       format.json { head :no_content }
     end
 

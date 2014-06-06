@@ -48,9 +48,6 @@ form
   a:hover
     color: lightgray
 
-.commented_a_post
-  margin-left: 70px
-
 .likes
   padding: 0px
 
@@ -97,9 +94,8 @@ form
   // padding-right: 20px
 
 .activity_feed
-  padding-top: 5px
+  padding-top: 20px
   border-top: 1px solid lightgray
-  padding-bottom: 30px
 
 .feed
   padding-top: 100px
@@ -122,12 +118,17 @@ form
   padding-top: 3px
   padding-bottom: 20px
 
+.commented_a_post
+  margin-left: 50px
 .like_post.liked_a_post
-  margin-left: 60px
+  margin-left: 50px
   .like_post
     .post
       margin-top: -15px
 
 //iphones
-@media only screen and  (max-device-width : 480px)
-
+@media only screen and (max-device-width : 320px)
+.commented_a_post
+  margin-left: 25px
+.like_post.liked_a_post
+  margin-left: 25px
