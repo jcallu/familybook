@@ -12,10 +12,11 @@ default: &default
 
 development:
   <<: *default
-  host: localhost
-  database: familybook
-  username: familybook
-  password: familybook1
+  database: myapp_development    
+#  host: localhost
+#  database: familybook
+#  username: familybook
+#  password: familybook1
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -23,9 +24,7 @@ development:
 #
 test:
   <<: *default
-  host: localhost
-  username: callubook
-  password: callubook
+  database: my_database_test
 
 production:
   <<: *default
