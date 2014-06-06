@@ -12,6 +12,7 @@ gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'public_activity'
 gem 'rails_12factor', group: :production
 
+gem 'unicorn',      group: :production
 gem 'pg',           group: :production
 gem 'rails', '4.1.1'
 # Use sqlite3 as the database for Active Record
