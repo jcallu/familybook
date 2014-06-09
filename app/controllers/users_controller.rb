@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:show, :edit, :update]
   # GET /users
   # GET /users.json
   def index
@@ -23,9 +23,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
-    @user.update_attribute(:avatar,user_params['id'])
-    @user.update_attribute(:name,user_params['id'])
+    #@user.update_attributes(:avatar,user_params['id'])
+    #@user.update_attribute(:name,user_params['id'])
   end
 
   def follow
@@ -71,6 +74,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me, :avatar)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me, :avatar, :avatar_url)
     end
 end

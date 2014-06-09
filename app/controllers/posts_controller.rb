@@ -34,9 +34,11 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
-
     respond_to do |format|
       if @post.save
+        @post.avatar_url_thumb = @post.avatar.url(:thumb)
+        @post.avatar_url_original = @post.avatar.url(:original)
+        @post.save
         format.html { redirect_to root_url, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else

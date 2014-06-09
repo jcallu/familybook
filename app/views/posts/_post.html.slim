@@ -1,23 +1,22 @@
 .user-box
-  = image_tag post.user.avatar.url(:thumb), class: 'profile_post'
+  = image_tag post.user.avatar_url_thumb, class: 'profile_post', id: 'load-img'
   | &nbsp; &nbsp;
   = link_to post.user.name, post.user
 .like_post
-  - if post.avatar.exists?
+  - if !post.avatar_url_original.nil?
     .photo_caption
       = post.content
     .posted_photo
-      = image_tag post.avatar.url(:original)
-    br
-  - unless post.avatar.exists?
+      = image_tag post.avatar_url_original
+  - else post.avatar_url_thumb.nil?
     .post
       = simple_format(post.content).html_safe
+  br     
   |  <div class="
   = post.class
   | -
   = post.id
   | ">
-  br
   = render 'shared/like_form', likeable: post, style: 'font-size:12px;'
 
 = link_to 'Write a comment.', post, class: 'comments', style: 'font-size:12px;margin-left:0px;'
@@ -33,8 +32,7 @@ br
 .comment_in_post[style="padding-left: 12px"]
   = render post.comments
 
-
-- unless post.avatar.exists?
+- unless post.avatar_url_thumb.nil?
   div[style="padding-bottom: 30px"]
 - else
   div[style="padding-bottom: 20px"]

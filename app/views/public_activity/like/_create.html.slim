@@ -3,13 +3,14 @@
   - @post_type = "Post"
   .activity_feed
     .user-box
-      = image_tag activity.owner.avatar.url(:thumb), class: 'like_profile'
-      | &nbsp;&nbsp;&nbsp;
+      = image_tag activity.owner.avatar_url_thumb, class: 'like_profile'
       .info
-        = link_to activity.owner.name, activity.owner
+        - if activity.owner == current_user
+          = link_to "You", activity.owner
+        - else
+          = link_to activity.owner.name, activity.owner
         |  liked a&nbsp;
         = link_to activity.trackable.likeable.class, activity.trackable.likeable
     .like_post.liked_a_post[style="margin-top:-10px"]
       = render 'posts/post', post: activity.trackable.likeable
   - @post_type = "Post"
-

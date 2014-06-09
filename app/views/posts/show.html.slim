@@ -2,7 +2,7 @@
 p#notice
   = notice
 .user-box
-  = image_tag @post.user.avatar.url(:thumb), class: 'profile', style: 'width:45px;height:45px'
+  = image_tag @post.user.avatar_url_thumb, class: 'profile', style: 'width:45px;height:45px'
   | &nbsp;&nbsp;
   = link_to @post.user.name, @post.user
 p
@@ -10,7 +10,8 @@ p
   .photo_caption
     = simple_format(@post.content).html_safe
 br
-= image_tag @post.avatar.url(:original) if @post.avatar.exists?
+.load-img
+  = image_tag @post.avatar_url_original unless @post.avatar_url_original.nil?
 |  <div class="
 = @post.class
 | -
