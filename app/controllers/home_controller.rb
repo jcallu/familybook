@@ -1,5 +1,23 @@
 class HomeController < ApplicationController
   def index
+    @dbx = DropboxUrl.results
+    @posts_with_pics = Post.where("avatar_file_name IS NOT NULL")
+    unless @dbx.url_exists?(@posts_with_pics.last.avatar_url_thumb)      
+      # Refresh dropbox expired posts image links
+      @posts_with_pics.each do |post|
+        post.avatar_url_thumb = post.avatar.url(:thumb)
+        post.avatar_url_original = post.avatar.url(:original)
+        post.save
+      end
+      # Refresh dropbox expired user image links
+      @users = User.where("avatar_file_name IS NOT NULL")
+      @users.each do |user|
+        user.avatar_url_thumb = user.avatar.url(:thumb)
+        user.avatar_url_original = user.avatar.url(:original)
+        user.save
+      end
+    end
+
     unless user_signed_in?
       redirect_to new_user_session_path
     else
@@ -13,6 +31,12 @@ class HomeController < ApplicationController
 
       @activities = PublicActivity::Activity.where(id: new_feed_activities).where(owner_id: followees_ids , owner_type: "User")
     end
+  end
+
+  def debug
+    @first_post_user = Post.find(1).user
+    @dbx = DropboxUrl.results
+    @debug ||= index.first
   end
 end
 

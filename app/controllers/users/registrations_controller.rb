@@ -1,5 +1,13 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 
+  def create
+    super
+    @user = User.find(current_user.id)
+    @user.avatar_url_thumb = @user.avatar.url(:thumb)
+    @user.avatar_url_original = @user.avatar.url(:original)
+    @user.save
+  end
+
   def update
     super
     @user = User.find(current_user.id)
