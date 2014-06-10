@@ -11,9 +11,10 @@ gem 'socialization'
 gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem "paperclip-dropbox", ">= 1.1.7"
 gem 'public_activity'
+gem 'newrelic_rpm', group: :production
 gem 'rails_12factor', group: :production
 gem 'unicorn',      group: :production
-gem 'pg',           group: :production
+gem 'pg'
 gem 'rails', '4.1.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3',      group: :development
