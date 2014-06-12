@@ -18,8 +18,8 @@ class FamiliesController < ApplicationController
   end 
   
   def index
-    redirect_to new_family_path if current_user.family_memberships.empty?
-
+    @families = Family.all
+    #redirect_to new_family_path if current_user.family_memberships.empty?
   end
 
   private
