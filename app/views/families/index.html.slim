@@ -1,37 +1,17 @@
-- if current_user.family_memberships.nil?
-  = redirect_to new_family_path
-- else
-  a[href='#' style="font-size: 30px"] 
-    | Find your family
-  br
+coffee:
+  $(document).ready ->
+    $("#left-menu").sidr
+      name: "sidr-left"
+      side: "left"
+    return
+  window.location.replace "#"
+  history.replaceState {}, "", window.location.href.slice(0, -1)  if typeof window.history.replaceState is "function"
 
-  coffee:
-    $(document).ready ->
-      $(".search").keyup ->
-        str = $(".search").val()
-        $(".families .box-display").each (index) ->
-          if $(this).attr("id")
-            unless $(this).attr("id").match(new RegExp(str, "i"))
-              $(this).fadeOut "fast"
-            else
-              $(this).fadeIn "slow"
-          return
-
-        return
-
-      return
-  
-  br
-  .user_content_container
-    .search-holder
-      .textbox
-        input.search autocomplete="off" name="search" placeholder=("Search Your Families") type="text" value=""
-      - $i = 0
-      - @families.each do |family|
-        - $i+=1
-        .families
-          .box-display[id="#{family.name}"]
-            = image_tag '/missing.png', class: 'profile', style: 'position:absolute; height:80px; width: 80px'
-            = link_to family.name, family, style: 'position:absolute; margin-left: 90px;padding-top: 10px; float: left'
-          - if $i % 2 == 0
-            div[style="right=1000px"]            
+a#left-menu[href="#left_menu"  onclick="if( ($a=$('#find_your_family')).is(':visible')) {$a.toggle();} if( ($b=$('#create_your_family')).is(':visible')) {$b.toggle();} if( ($c=$('#show_your_family')).is(':visible')) {$c.toggle();}" style=" height: 50px; width: 50px"]
+  i.fi-results-demographics[style="font-size: 50px"]
+br
+.families-container
+  = render 'families/sidr_left'
+  = render 'families/find_your_family'
+  = render 'families/create_your_family'
+  = render 'families/show_your_family'

@@ -1,0 +1,11 @@
+#show_your_family.hidden              
+ .families-content
+    br
+    br
+    .user_content_container
+      h4
+        | My 
+        = "Family".pluralize(@my_families.count)
+      div[style="padding-bottom:10px"]
+      - @my_families.each do |my_family|
+        h1 = my_family.name

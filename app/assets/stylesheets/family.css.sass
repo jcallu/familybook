@@ -1,8 +1,42 @@
 // Place all the styles related to the family controller here.
 // They will automatically be included in application.css.
 // You can use Sass here: http://sass-lang.com/
+.families-container
+  height: 100%
+  width: 100%
+  border-left: 24px solid #f8f8f8 
+  border-top: 24px solid #f8f8f8
+  float: left 
+
+
+.side-nav-container
+  position: absolute
+  float: left
+
+.families-content
+  padding-left: 30px
+  position: absolute
+
+.hidden
+  display: none
+
+
+@media only screen and (max-device-width : 320px)
+  #find_your_family
+    .box-display
+      font-size: 13px !important
+      width: 250px !important
+  #create_your_family
+    .create_your_family
+      width: 250px !important
+
+#create_your_family
+  .create_your_family
+    width: 300px
 
 #find_your_family
+  .user_content_container
+    width: 95%
   *
     font-family : 'lucida grande',tahoma,verdana,arial,sans-serif     
 
@@ -21,10 +55,8 @@
     overflow: hidden
 
   .search-holder
-    margin: 3px
-    background: #ECEFF5
-    border-bottom: 1px solid #C4CDE0
-    height: 60px
+    height: 30px
+    padding-top: 4px
 
   .title
     font-size: 16px
@@ -37,20 +69,22 @@
     float: left
     line-height: 50px
 
-  .textbox
-  
-
   .textbox input
     border: 1px solid #C4CDE0
     outline: medium none
     padding: 2px
-    width: 190px
+    height: 190px
     font-size: 11px
     height: 22px
-    margin-top: 15px
+    vertical-align: middle
+
+  .title
+    font-size: 15px
+
+  .fl
+    float: left
 
   .families
-    margin: 20px 25px
 
   .name
     margin-left: 10px

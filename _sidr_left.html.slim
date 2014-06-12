@@ -1,0 +1,22 @@
+#sidr-left  
+  .side-nav-container
+    ul.side-nav
+      li.divider
+      li
+        a[ id="all_families" onclick="if( ($b=$('#create_your_family')).is(':visible')) {$b.toggle();} $('#find_your_family').toggle(); $.sidr('close', 'sidr-left');" href="#find_your_family"] Find Families
+      li.divier
+      li
+        a[ id="new_family" onclick="if( ($a=$('#find_your_family')).is(':visible')) {$a.toggle();} $('#create_your_family').toggle(); $.sidr('close', 'sidr-left'); " href="#create_your_family"] Create your Family
+        coffee:
+          $(document).ready ->
+            $(".search").keyup ->
+              str = $(".search").val()
+              $(".families .box-display").each (index) ->
+                if $(this).attr("id")
+                  unless $(this).attr("id").match(new RegExp(str, "i"))
+                    $(this).fadeOut "fast"
+                  else
+                    $(this).fadeIn "slow"
+                return
+              return
+            return

@@ -1,0 +1,14 @@
+#create_your_family.hidden              
+ .families-content
+    br
+    br
+    .user_content_container
+      h4 Create Your Family
+      div[style="padding-bottom:10px"]
+        = form_for(@family) do |f|
+          .create_your_family
+            = f.label :name
+            br
+            = f.text_field :name
+          div
+            = f.submit "Submit" , class: 'button'
