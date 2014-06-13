@@ -2,7 +2,7 @@
 nav.top-bar data-topbar=""
   ul.title-area
     li.name
-      a[href="/" style="padding-left: 20px"]
+      a[href="/" style="padding-left: 20px;padding-right: 10px"]
         img[src="/family-book-logo.png" style="width:42px; height:42px; z-index: 999999"]
     - if user_signed_in?
       li.toggle-topbar
@@ -11,22 +11,43 @@ nav.top-bar data-topbar=""
           i.fi-list.menu_icon
   section.top-bar-section
     - if user_signed_in?
-      ul.right
-        li.divider
-        li
-          = link_to 'Home', root_path
-        li
-          = link_to 'Family Members', users_path
-        li
-          = link_to 'Families', families_path
+      ul.left
         li.has-dropdown
           = link_to current_user.name, current_user
           ul.dropdown
             li
-
               = link_to "My Profile", current_user
             li
               = link_to 'Edit Profile', edit_user_registration_path
+
+      ul.right
+        li.divider
+        li.has-dropdown
+          - unless current_user.family_memberships.empty?
+            - @size = (my_families.collect{|r| r.name}.group_by(&:size).max.first.to_f*8.5).to_s + "px"
+          - else
+            - @size = "100%"
+          = link_to current_family.nil? ? "You have not set your default family yet." : current_family.name, "#", style: "width: #{@size}"
+          ul.dropdown
+            li
+              = link_to "Family Profile", current_family
+            li
+              a
+                form[name="input"  method="get" style="margin-left: 15px"]
+                  coffee:
+                    $("select").click ->
+                      $(this).closest("form").submit()
+                      return
+                  = select_tag :family, options_for_select( my_families.collect{|r| [r.name, r.id]}), :include_blank => true , style: "width: #{@size}; margin-top: 0px; margin-bottom:-2px"
+                  br
+                  button[style="margin-bottom:3px;height: 30px;width: #{@size}" onclick="#{ set_default_family }"]
+                    p[style="vertical-align: middle; font-size: 12px"] Set Default Family
+
+        li
+          = link_to 'Family Members', users_path
+        li
+          = link_to 'Families', families_path
+
         li.divider
         li
           = link_to 'Sign out', destroy_user_session_path , method: :delete
