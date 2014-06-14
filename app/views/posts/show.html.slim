@@ -11,7 +11,7 @@ p
     = simple_format(@post.content).html_safe
 br
 .load-img
-  = image_tag @post.avatar_url_original unless @post.avatar_url_original.nil?
+  = image_tag @post.avatar_url_original unless @post.avatar_file_name.nil?
 |  <div class="
 = @post.class
 | -

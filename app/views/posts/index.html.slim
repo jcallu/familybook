@@ -17,7 +17,7 @@ table
       td[style="width: 200px"]
         = simple_format(post.content).html_safe
       td
-        = image_tag post.avatar_url_thumb if !post.avatar_url_thumb.nil?
+        = image_tag post.avatar_url_thumb if !post.avatar_file_name.nil?
       td
         = link_to 'Show', post
 

@@ -77,7 +77,9 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      if family_members(current_user_family).map{|r| r.id}.include?(params[:id].to_i)
+      if current_user.followees(User).empty?
+        @user = User.find(params[:id])
+      else family_members(current_user_family).map{|r| r.id}.include?(params[:id].to_i)
         @user = User.find(params[:id]) 
       end
     end

@@ -3,12 +3,12 @@
   | &nbsp; &nbsp;
   = link_to post.user.name, post.user
 .like_post
-  - if !post.avatar_url_original.nil?
+  - unless post.avatar_file_name.nil?
     .photo_caption
       = post.content
     .posted_photo
       = image_tag post.avatar_url_original
-  - else post.avatar_url_thumb.nil?
+  - else
     .post
       = simple_format(post.content).html_safe
   br     

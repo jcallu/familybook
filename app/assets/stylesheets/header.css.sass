@@ -94,9 +94,8 @@ $secondary-color: scale-color($primary-color , $lightness: +90%)
 
 
 .select-style
-  outline: none
   border: 1px solid #ccc
-  width: 120px
+  //width: 120px
   border-radius: 3px
   overflow: hidden
   background: #fafafa url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 50%
@@ -105,16 +104,16 @@ $secondary-color: scale-color($primary-color , $lightness: +90%)
   padding: 5px 8px
   width: 130%
   border: none
-  outline: none
-  box-shadow: none
+  box-shadow: white
   background: transparent
-  background-image: none
+  background: #fafafa url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 50%
   -webkit-appearance: none
 
 
 .select-style select:focus, select:hover
-  outline: none
-  background-color: $primary-color
+  outline: black
+  color: $primary-color
+  background-color: white
 
 
 ///TOP BAR SECTION END///
