@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include FamilyHelper
   before_action :set_user, only: [:show, :edit, :update]
   # GET /users
   # GET /users.json
@@ -16,14 +17,18 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    followees_ids = current_user.followees(User).map{|r| r.id }
-    followees_ids << current_user.id
-    @user_id = @user.id if followees_ids.include?(@user.id)
-    @activities = PublicActivity::Activity.where(owner_id: @user_id, owner_type: "User", trackable_type: "Post")
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
+    unless @user.nil?
+      followees_ids = current_user.followees(User).map{|r| r.id }
+      followees_ids << current_user.id
+      @user_id = @user.id if followees_ids.include?(@user.id)
+      @activities = PublicActivity::Activity.where(owner_id: @user_id, owner_type: "User", trackable_type: "Post")
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @user }
+      end
+      @user
     end
+
   end
 
   def edit
@@ -72,7 +77,9 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if family_members(current_user_family).map{|r| r.id}.include?(params[:id].to_i)
+        @user = User.find(params[:id]) 
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,5 +1,4 @@
 module FamilyHelper
-
   def get_family
     @get_family ||= (params[:family].nil? || !my_families.map{|r| r.id}.include?(params[:family].to_i) ) ? current_family : Family.find(params[:family]) 
   end
@@ -26,7 +25,7 @@ module FamilyHelper
   
   def current_user_family
     family = UserDefaultFamily.find_by_user_id(current_user.id)
-    Family.find(family.family_id) unless family.nil?
+    @current_user_family ||= Family.find(family.family_id) unless family.nil?
   end
   
   def current_user_owner?(family)
@@ -34,6 +33,7 @@ module FamilyHelper
   end
   
   def family_members(family)
-    User.find(FamilyMembership.where("family_id = #{family.id}").map{|r| r.id})
+    User.find(FamilyMembership.where("family_id = #{family.id}").map{|r| r.user_id})
   end
+  
 end
