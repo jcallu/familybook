@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :family_memberships
   has_many :families, :through => :family_memberships
+  has_one :user_default_family
 
   acts_as_follower
   acts_as_followable

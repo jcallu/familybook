@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'header/_header'
+
+  put "/" => "home#index"
+
   devise_for :users, :controllers => {:registrations => "users/registrations", :passwords => "users/passwords"}
 
   root to: "home#index"
@@ -13,4 +17,5 @@ Rails.application.routes.draw do
   resources :comments
   resources :likes
   resources :families
+
 end

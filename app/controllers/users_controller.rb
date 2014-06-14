@@ -3,7 +3,9 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @family_id = UserDefaultFamily.find_by_user_id(current_user.id).family_id
+    #@users = User.all
+    @users = User.joins("Left Join (select user_id, family_id From family_memberships) fm ON fm.user_id = users.id").where("fm.family_id = ?", @family_id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
