@@ -1,4 +1,6 @@
 class FamiliesController < ApplicationController
+  before_action :set_family, only: [:show]
+
   def new
     @family = Family.new
   end
@@ -20,9 +22,9 @@ class FamiliesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @family.errors, status: :unprocessable_entity }
       end
-    end 
+    end
   end
-  
+
   def index
     @family = Family.new
     @families = Family.all
@@ -30,13 +32,23 @@ class FamiliesController < ApplicationController
   end
 
   def show
-    @this_family = Family.find_by_short_name(params[:id])
+    @this_family = Family.find_by_short_name(set_family)
   end
 
+  def request_family_membership
+    @family = Family.find(params[:id])
+    @family_requested = FamilyMembershipRequest.new
+    @family_requested.requested_user_id = current_user.id
+    @family_requested.family_id = @family.id
+    redirect_to @family
+  end
   private
 
   def family_params
-    params.require(:family).permit(:name,:id,:short_name)
+    params.require(:family).permit(:name,:short_name,:user_id, :family)
   end
 
+  def set_family
+    params.require(:id)
+  end
 end

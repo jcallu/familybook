@@ -24,7 +24,8 @@ nav.top-bar data-topbar=""
         li.divider
         li.has-dropdown
           - if current_family.nil?
-            span.has-tip data-options="" data-tooltip="" style="margin-left: 3px;padding-top: 13.5px" title="#{current_family.nil? ? "Add a family and set your default family." : current_family.name}" = (current_family.nil? ? "No Family" : current_family.name)
+            a
+              span.has-tip data-options="" data-tooltip="" style="" title="#{current_family.nil? ? "Add a family and set your default family." : current_family.name}" = (current_family.nil? ? "No Family" : current_family.name)
           - else
             = link_to get_family.name, "#"
           - unless current_family.nil?
@@ -34,7 +35,7 @@ nav.top-bar data-topbar=""
               li
                 a
                   = form_tag root_path, :method => :get
-                    = select_tag :family, options_for_select( my_families.collect{|r| [r.name, r.id]} ),  :onchange => "  this.form.submit(); #{set_default_family}" ,:include_blank => true,  :style => " margin-top: 0px; margin-bottom:-2px"
+                    = select_tag :family, options_for_select( my_families.collect{|r| [r.name, r.id]} ),  :onchange => "  this.form.submit(); #{set_default_family}" ,:include_blank => true,  :style => "margin-top: 0px; margin-bottom:-2px", :class => "select-style"
         li
           = link_to 'Family Members', users_path
         li

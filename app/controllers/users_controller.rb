@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @family_id = UserDefaultFamily.find_by_user_id(current_user.id).family_id
+    @family_id = UserDefaultFamily.find_by_user_id(current_user.id)
+    @family_id = @family_id.family_id unless @family_id.nil?
     #@users = User.all
     @users = User.joins("Left Join (select user_id, family_id From family_memberships) fm ON fm.user_id = users.id").where("fm.family_id = ?", @family_id)
     respond_to do |format|

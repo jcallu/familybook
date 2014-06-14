@@ -1,0 +1,9 @@
+div class="famiy-#{@this_family.id}"
+  div#family_request_form
+    - if current_user_owner?(@this_family)
+      /= render 'shared/unfollow', user: user
+      p owner
+    - else
+      = render 'shared/request_family_membership'
+      //#, user: @this_family
+      p not_owner

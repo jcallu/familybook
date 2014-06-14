@@ -24,16 +24,16 @@ $secondary-color: scale-color($primary-color , $lightness: +90%)
 .top-bar-section ul li:hover:not(.has-form) > a
   background-color: $primary-color
 
-.top-bar-section ul li > span, .top-bar-section ul li > a
+.top-bar-section ul li > a span, .top-bar-section ul li > a
   font-size: 11px
 
-.top-bar-section ul li > span
+.top-bar-section ul li > a span
   display: block
   width: 100%
   font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif
-  font-size: 0.8125rem
   font-weight: normal
   text-transform: none
+  color: $primary-color
 
 .top-bar-section .has-dropdown
   a
@@ -91,6 +91,31 @@ $secondary-color: scale-color($primary-color , $lightness: +90%)
 .top_bar_divider.bar
   border: 1px solid lightgray
   margin-bottom: 5px
+
+
+.select-style
+  outline: none
+  border: 1px solid #ccc
+  width: 120px
+  border-radius: 3px
+  overflow: hidden
+  background: #fafafa url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 50%
+
+.select-style select
+  padding: 5px 8px
+  width: 130%
+  border: none
+  outline: none
+  box-shadow: none
+  background: transparent
+  background-image: none
+  -webkit-appearance: none
+
+
+.select-style select:focus, select:hover
+  outline: none
+  background-color: $primary-color
+
 
 ///TOP BAR SECTION END///
 

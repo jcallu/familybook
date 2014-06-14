@@ -1,1 +1,17 @@
-p = @this_family.name
+- unless @this_family.nil?
+  .large-8.columns
+    .right
+      .profile_main_pic
+        = image_tag '/missing.png', class: 'profile'
+    span.left
+      h4
+        = @this_family.name
+        br
+          = render 'shared/family_request_form'
+    .profile_space[style="padding-bottom:200px"]
+    .row.feed
+- else
+  - if @this_family.nil?
+    coffee:
+      location.href = '/'
+

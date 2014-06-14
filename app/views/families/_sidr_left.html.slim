@@ -1,4 +1,4 @@
-#sidr-left  
+#sidr-left.hidden
   .side-nav-container
     ul.side-nav
       li.divider
@@ -9,7 +9,9 @@
         a[ id="new_family" onclick="if( ($b=$('#show_your_family')).is(':visible')) {$b.toggle();} if( ($a=$('#find_your_family')).is(':visible')) {$a.toggle();} $('#create_your_family').toggle(); $.sidr('close', 'sidr-left'); " href="#create_your_family"] Create your Family
       li.divier
       li
-        a[ id="new_family" onclick="if( ($b=$('#create_your_family')).is(':visible')) {$b.toggle();} if( ($a=$('#find_your_family')).is(':visible')) {$a.toggle();} $('#show_your_family').toggle(); $.sidr('close', 'sidr-left'); " href="#show_your_family"] My Families
+        a[ id="new_family" onclick="if( ($b=$('#create_your_family')).is(':visible')) {$b.toggle();} if( ($a=$('#find_your_family')).is(':visible')) {$a.toggle();} $('#show_your_family').toggle(); $.sidr('close', 'sidr-left'); " href="#show_your_family"]
+          | My
+          = " Family".pluralize(@my_families.count)
         coffee:
           $(document).ready ->
             $(".search").keyup ->
