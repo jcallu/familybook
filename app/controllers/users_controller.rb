@@ -1,16 +1,23 @@
 class UsersController < ApplicationController
+
+  before_filter :authenticate_user!
+
   include FamilyHelper
   before_action :set_user, only: [:show, :edit, :update]
   # GET /users
   # GET /users.json
   def index
-    @family_id = UserDefaultFamily.find_by_user_id(current_user.id)
-    @family_id = @family_id.family_id unless @family_id.nil?
-    #@users = User.all
-    @users = User.joins("Left Join (select user_id, family_id From family_memberships) fm ON fm.user_id = users.id").where("fm.family_id = ?", @family_id)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    else
+      @family_id = UserDefaultFamily.find_by_user_id(current_user.id)
+      @family_id = @family_id.family_id unless @family_id.nil?
+      #@users = User.all
+      @users = User.joins("Left Join (select user_id, family_id From family_memberships) fm ON fm.user_id = users.id").where("fm.family_id = ?", @family_id)
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @users }
+      end
     end
   end
 
@@ -75,11 +82,13 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      if current_user.followees(User).empty?
-        @user = User.find(params[:id])
-      else family_members(current_user_family).map{|r| r.id}.include?(params[:id].to_i)
-        @user = User.find(params[:id]) 
-      end
+      #if current_user.followees(User).empty? && User.pluck(:id).include?(params[:id]) 
+      #  @user = User.find(params[:id])
+      #family_members = family_members(current_user_family)
+      #elsif !family_members.nil? || family_members.map{|r| r.id}.include?(params[:id].to_i)
+      #  @user = User.find(params[:id]) 
+      #end
+      @user = User.find(params[:id]) 
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

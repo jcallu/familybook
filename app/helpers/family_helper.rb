@@ -37,7 +37,10 @@ module FamilyHelper
   end
   
   def family_members(family)
-    User.find(FamilyMembership.where("family_id = #{family.id}").map{|r| r.user_id})
+    unless family.nil?
+      User.find(FamilyMembership.where("family_id = #{family.id}").map{|r| r.user_id})
+    else
+      nil
+    end
   end
-  
 end

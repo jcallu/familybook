@@ -1,10 +1,18 @@
 class PostsController < ApplicationController
+
+  before_filter :authenticate_user! 
+
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
+  include FamilyHelper
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    else
+      @posts = Post.all.where(:user_id => family_members(current_family).map{|r| r.id} )
+    end
   end
 
   # GET /posts/1

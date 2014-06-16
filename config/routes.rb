@@ -15,10 +15,16 @@ Rails.application.routes.draw do
   get 'family_request_pending' => 'families#family_request_pending'
   get 'family_request_delete' => 'families#family_request_delete'
 
+  get 'families/member_requests' => 'families#member_requests'
+  
+  get 'family_accept_received' => 'families#family_accept_received'
+  get 'family_accept_confirmed' => 'families#family_accept_confirmed'
+
   resources :posts
   resources :users
   resources :comments
   resources :likes
   resources :families
-
+  
+  get "*path" => redirect("/")
 end

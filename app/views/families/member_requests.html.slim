@@ -1,0 +1,26 @@
+.families-content
+  br
+  br
+  .user_content_container
+    h4
+      | My 
+      = "Family".pluralize(@my_families.count)
+    div[style="padding-bottom:10px"]
+    - $i = 0
+    
+    - @my_families.each do |my_family|
+      - @requests = FamilyMembershipRequest.where( :family_id => my_family.id )
+      - $i+=1
+      .families
+        .box-display[style="padding-right: 400px;padding-bottom: #{@requests.count*80}"]
+          = image_tag '/missing.png', class: 'profile', style: 'position:absolute; height:80px; width: 80px'
+          = link_to my_family.name, my_family, style: 'position:absolute; margin-left: 90px;padding-top: 10px;'
+          .accept_requests[style= 'position:absolute; margin-left: 90px']
+            - @requests.each do |requests|
+              div[style= 'position: relative; border: 1px solid lightgray;margin-top: 58px; margin-bottom: 2px']
+              - user = User.find(requests.user_id)
+              p[style="float:left"] = user.name
+              = render 'shared/family_accept_form', family: my_family, user: user
+              
+        - if $i % 2 == 0
+          div[style="right=1000px"]

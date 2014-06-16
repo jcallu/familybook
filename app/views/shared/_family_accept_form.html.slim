@@ -1,0 +1,6 @@
+div class="family-#{family.id}-user-#{user.id}" style= 'float:left; padding-left: 20px'
+  div#family_accept_form
+    - unless FamilyMembershipRequest.where( :family_id => family.id, :user_id => user.id).empty?
+      = render 'shared/family_accept_received', family: family, user: user
+    - else
+      = render 'shared/family_accept_confirmed', family: family, user: user

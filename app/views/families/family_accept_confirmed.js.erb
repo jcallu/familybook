@@ -1,0 +1,1 @@
+$('.family-<%= @family.id %>-user-<%=@user.id %> > #family_accept_form').html("<%= escape_javascript(render 'shared/family_accept_received', family: @family, user: @user) %>");

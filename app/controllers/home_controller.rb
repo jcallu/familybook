@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def index
-    @debug = ["shilo boy", "saiko boy", "jijoboy"]
     unless user_signed_in?
       redirect_to new_user_session_path
     else

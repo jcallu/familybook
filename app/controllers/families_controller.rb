@@ -1,5 +1,10 @@
 class FamiliesController < ApplicationController
+
+  before_filter :authenticate_user!
+
   before_action :set_family, only: [:show]
+
+  include FamilyHelper
 
   def new
     @family = Family.new
@@ -14,6 +19,7 @@ class FamiliesController < ApplicationController
     @family_membership.user_id = current_user.id
     @family_membership.family_id = @family.id
     @saved2 = @family_membership.save
+
     respond_to do |format|
       if @saved1 && @saved2
         format.html { redirect_to families_path, notice: 'Family was successfully created.' }
@@ -26,9 +32,13 @@ class FamiliesController < ApplicationController
   end
 
   def index
-    @family = Family.new
-    @families = Family.all
-    @my_families = current_user.family_memberships.collect{|r| r.family}
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    else
+      @family = Family.new
+      @families = Family.all
+      @my_families = current_user.family_memberships.collect{|r| r.family}
+    end
   end
 
   def show
@@ -42,7 +52,7 @@ class FamiliesController < ApplicationController
       family_requested.user_id = current_user.id
       family_requested.family_id = @family.id
       family_requested.save
-   end
+    end
   end
   
   def family_request_pending
@@ -54,7 +64,23 @@ class FamiliesController < ApplicationController
     family_membership_to_delete = FamilyMembership.where("user_id = #{current_user.id} AND family_id = #{@family.id}")
     unless family_membership_to_delete.empty?
       FamilyMembership.destroy(family_membership_to_delete.map{|r| r.id})
+      UserDefaultFamily.destroy(UserDefaultFamily.where("user_id = #{current_user.id} AND family_id = #{@family.id}").pluck(:id))
     end
+  end
+
+  def family_accept_received
+    @family = Family.find(params[:family])
+    @user = User.find(params[:user])
+  end
+
+  def family_accept_confirmed
+    @family = Family.find(params[:family])
+    @user = User.find(params[:user])
+  end
+
+  def member_requests
+    @my_families = my_families
+    @family = current_family
   end
 
   private

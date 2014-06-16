@@ -1,7 +1,7 @@
 div[style="padding-top: 20px"]
 .user_content_container
   - $i = 0
-  - @users.where("id != :id", id: current_user.id).each do |user|
+  - @list_of_members = @users.where("id != :id", id: current_user.id).each do |user|
     - $i+=1
     .box-display
       = image_tag user.avatar_url_thumb, class: 'profile', style: 'position:absolute; height:80px; width: 80px'
@@ -10,3 +10,9 @@ div[style="padding-top: 20px"]
         = render 'shared/follow_form', user: user 
     - if $i % 2 == 0
       div[style="right=1000px"]
+  - if @list_of_members.empty?
+    javascript:
+      $(document).ready(function(){
+        $('#pop_up_new').trigger('click');
+        });
+    = render 'messages/new_family_members'
