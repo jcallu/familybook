@@ -1,9 +1,10 @@
-div class="famiy-#{@this_family.id}"
+div class="family-#{family.id}"
   div#family_request_form
-    - if current_user_owner?(@this_family)
-      /= render 'shared/unfollow', user: user
-      p owner
-    - else
-      = render 'shared/request_family_membership'
-      //#, user: @this_family
-      p not_owner
+    - if current_user_owner?(family)
+      p You cannot delete the family you started.
+    - elsif my_families.include?(family)
+      = render 'shared/family_request_delete', family: family
+    - elsif !my_family_requests_for(family).nil?
+      = render 'shared/family_request_pending', family: family
+    - else  
+      = render 'shared/family_request_sent', family: family

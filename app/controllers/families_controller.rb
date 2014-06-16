@@ -32,16 +32,31 @@ class FamiliesController < ApplicationController
   end
 
   def show
-    @this_family = Family.find_by_short_name(set_family)
+    @family = Family.find_by_short_name(set_family)
   end
 
-  def request_family_membership
-    @family = Family.find(params[:id])
-    @family_requested = FamilyMembershipRequest.new
-    @family_requested.requested_user_id = current_user.id
-    @family_requested.family_id = @family.id
-    redirect_to @family
+  def family_request_sent
+    @family = Family.find(params[:family])
+    if current_user.family_membership_requests.where("family_id = #{@family.id}").empty?
+      family_requested = FamilyMembershipRequest.new
+      family_requested.user_id = current_user.id
+      family_requested.family_id = @family.id
+      family_requested.save
+   end
   end
+  
+  def family_request_pending
+    @family = Family.find(params[:family])
+  end
+  
+  def family_request_delete
+    @family = Family.find(params[:family])
+    family_membership_to_delete = FamilyMembership.where("user_id = #{current_user.id} AND family_id = #{@family.id}")
+    unless family_membership_to_delete.empty?
+      FamilyMembership.destroy(family_membership_to_delete.map{|r| r.id})
+    end
+  end
+
   private
 
   def family_params

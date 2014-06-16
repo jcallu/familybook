@@ -11,8 +11,12 @@ class User < ActiveRecord::Base
   has_many :comments
 
   has_many :family_memberships
+  
+  has_many :family_membership_requests
+
   has_many :families, :through => :family_memberships
-  has_one :user_default_family
+
+  has_one :user_default_family, :through => :family_memberships
 
   acts_as_follower
   acts_as_followable

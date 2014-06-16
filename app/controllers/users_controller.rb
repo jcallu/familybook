@@ -35,8 +35,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    #@user.update_attributes(:avatar,user_params['id'])
-    #@user.update_attribute(:name,user_params['id'])
   end
 
   def follow

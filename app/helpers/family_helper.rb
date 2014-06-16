@@ -12,6 +12,10 @@ module FamilyHelper
   def my_families
     @my_families ||= current_user.family_memberships.collect{ |r| r.family}
   end  
+ 
+  def my_family_requests_for(family)
+    current_user.family_membership_requests.find_by_family_id(family.id)
+  end
 
   def set_default_family
     chosen_id = params[:family].to_i if my_families.map{|r| r.id}.include?(params[:family].to_i)

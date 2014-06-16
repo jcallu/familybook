@@ -7,10 +7,13 @@ Rails.application.routes.draw do
 
   get 'follow' => 'users#follow'
   get 'unfollow' => 'users#unfollow'
+
   get 'like' => 'users#like'
   get 'unlike' => 'users#unlike'
 
-  get 'request_family_membership' => 'families#request_family_membership'
+  get 'family_request_sent' => 'families#family_request_sent'
+  get 'family_request_pending' => 'families#family_request_pending'
+  get 'family_request_delete' => 'families#family_request_delete'
 
   resources :posts
   resources :users

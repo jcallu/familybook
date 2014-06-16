@@ -1,17 +1,18 @@
-- unless @this_family.nil?
+- unless @family.nil?
   .large-8.columns
     .right
       .profile_main_pic
         = image_tag '/missing.png', class: 'profile'
     span.left
       h4
-        = @this_family.name
+        = @family.name
         br
-          = render 'shared/family_request_form'
+          = render 'shared/family_request_form', family: @family
     .profile_space[style="padding-bottom:200px"]
     .row.feed
+    p = @family.id
 - else
-  - if @this_family.nil?
+  - if @family.nil?
     coffee:
       location.href = '/'
 
