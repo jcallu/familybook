@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
-  include FamilyHelper
+  include GroupHelper
 
   def index
     unless user_signed_in?
@@ -29,7 +29,7 @@ class HomeController < ApplicationController
             @post_activities = PublicActivity::Activity.where("trackable_type = 'Post' AND trackable_id = #{post.id}").pluck(:id).sort!.reverse.drop(1).reverse
             PublicActivity::Activity.destroy(@post_activities)
             @activity = PublicActivity::Activity.find(PublicActivity::Activity.where(:trackable_id => post.id, :trackable_type => 'Post', :key => 'post.update').first.id)
-            @activity.family_id = current_family.id
+            @activity.group_id = current_group.id
             @activity.save
           end
         end
@@ -42,9 +42,9 @@ class HomeController < ApplicationController
 
       new_feed_activities = PublicActivity::Activity.find_by_sql(news_feed_query).map {|r| r.id}
       
-      family_id = params[:family] || (current_family.id unless current_family.nil?)
+      group_id = params[:group] || (current_group.id unless current_group.nil?)
 
-      @activities = PublicActivity::Activity.where(id: new_feed_activities, owner_id: followees_ids , owner_type: "User", family_id: family_id)
+      @activities = PublicActivity::Activity.where(id: new_feed_activities, owner_id: followees_ids , owner_type: "User", group_id: group_id)
     end
   end
 end

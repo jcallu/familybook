@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   before_filter :authenticate_user!
 
-  include FamilyHelper
+  include GroupHelper
   before_action :set_user, only: [:show, :edit, :update]
   # GET /users
   # GET /users.json
@@ -10,10 +10,10 @@ class UsersController < ApplicationController
     unless user_signed_in?
       redirect_to new_user_session_path
     else
-      @family_id = UserDefaultFamily.find_by_user_id(current_user.id)
-      @family_id = @family_id.family_id unless @family_id.nil?
+      @group_id = UserDefaultGroup.find_by_user_id(current_user.id)
+      @group_id = @group_id.group_id unless @group_id.nil?
       #@users = User.all
-      @users = User.joins("Left Join (select user_id, family_id From family_memberships) fm ON fm.user_id = users.id").where("fm.family_id = ?", @family_id)
+      @users = User.joins("Left Join (select user_id, group_id From group_memberships) fm ON fm.user_id = users.id").where("fm.group_id = ?", @group_id)
       respond_to do |format|
         format.html # index.html.erb
         format.json { render json: @users }
@@ -29,9 +29,9 @@ class UsersController < ApplicationController
       followees_ids << current_user.id
       @user_id = @user.id if followees_ids.include?(@user.id)
       
-      family_id = params[:family] || (current_family.id unless current_family.nil?)      
+      group_id = params[:group] || (current_group.id unless current_group.nil?)      
 
-      @activities = PublicActivity::Activity.where(owner_id: @user_id, owner_type: "User", trackable_type: "Post", family_id: family_id)
+      @activities = PublicActivity::Activity.where(owner_id: @user_id, owner_type: "User", trackable_type: "Post", group_id: group_id)
       respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @user }
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
       @trackable_id_from_likes = Like.where(:liker_id => current_user.id, :likeable_type => 'Comment', :likeable_id => @likeable.id).first
     end
     @activity = PublicActivity::Activity.find(PublicActivity::Activity.where("trackable_id = #{@trackable_id_from_likes.id} AND  key LIKE 'like%'").first.id)
-    @activity.family_id = current_family.id
+    @activity.group_id = current_group.id
     @activity.save
   end
 
@@ -90,14 +90,14 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      family_members = family_members(current_family)
-      if !family_members.nil? && family_members.map{|r| r.id}.include?(params[:id].to_i) || current_user.id==params[:id].to_i
+      group_members = group_members(current_group)
+      if !group_members.nil? && group_members.map{|r| r.id}.include?(params[:id].to_i) || current_user.id==params[:id].to_i
         @user = User.find(params[:id]) 
       end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me, :avatar, :avatar_url, :family_id)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me, :avatar, :avatar_url, :group_id)
     end
 end

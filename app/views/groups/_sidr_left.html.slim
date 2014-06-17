@@ -1,0 +1,27 @@
+#sidr-left.hidden
+  .side-nav-container
+    ul.side-nav
+      li.divider
+      li
+        a[ id="all_groups" onclick="if( ($b=$('#show_your_group')).is(':visible')) {$b.toggle();} if( ($a=$('#create_your_group')).is(':visible')) {$a.toggle();} $('#find_your_group').toggle(); $.sidr('close', 'sidr-left');" href="#find_your_group"] Find Groups
+      li.divier
+      li
+        a[ id="new_group" onclick="if( ($b=$('#show_your_group')).is(':visible')) {$b.toggle();} if( ($a=$('#find_your_group')).is(':visible')) {$a.toggle();} $('#create_your_group').toggle(); $.sidr('close', 'sidr-left'); " href="#create_your_group"] Create your Group
+      li.divier
+      li
+        a[ id="new_group" onclick="if( ($b=$('#create_your_group')).is(':visible')) {$b.toggle();} if( ($a=$('#find_your_group')).is(':visible')) {$a.toggle();} $('#show_your_group').toggle(); $.sidr('close', 'sidr-left'); " href="#show_your_group"]
+          | My
+          = " Group".pluralize(@my_groups.count)
+        coffee:
+          $(document).ready ->
+            $(".search").keyup ->
+              str = $(".search").val()
+              $(".groups .box-display").each (index) ->
+                if $(this).attr("id")
+                  unless $(this).attr("id").match(new RegExp(str, "i"))
+                    $(this).fadeOut "fast"
+                  else
+                    $(this).fadeIn "slow"
+                return
+              return
+            return

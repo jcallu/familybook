@@ -1,0 +1,16 @@
+div class="group-#{group.id}"
+  div#group_request_form
+    - if current_user_owner?(group)
+      div[style="width: 300px"]
+        br
+        br
+        p
+          | Currently you cannot delete the group you started.
+          br
+          | I am working on that.
+    - elsif my_groups.include?(group)
+      = render 'shared/group_request_delete', group: group
+    - elsif !my_group_requests_for(group).nil?
+      = render 'shared/group_request_pending', group: group
+    - else
+      = render 'shared/group_request_sent', group: group

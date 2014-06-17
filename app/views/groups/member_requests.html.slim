@@ -1,0 +1,28 @@
+#member_requests
+  .groups-content
+    br
+    br
+    .user_content_container
+      h4
+        | My 
+        = "Group".pluralize(@my_groups.count)
+      div[style="padding-bottom:10px"]
+      - $i = 0
+      
+      - @my_groups.each do |my_group|
+        - @requests = GroupMembershipRequest.where( :group_id => my_group.id )
+        - $i+=1
+        .groups
+          .box-display.media_font[style="padding-bottom: #{@requests.count*90}"]
+            = image_tag '/missing.png', class: 'profile', style: 'position:absolute; height:50px; width: 50px'
+            = link_to my_group.name, my_group, style: 'position:absolute; margin-left: 60px;padding-top: 5px;'
+            .accept_requests.media_font[style= 'position:absolute; margin-left: 60px']
+              - @requests.each do |requests|
+                .line[style= 'position: relative; border: 1px solid lightgray;margin-top: 58px; margin-bottom: 4px']
+                - user = User.find(requests.user_id)  
+                .member_req_name[style="width: 220px;float:left"]
+                  p.media_font2[style="float:left"] = user.name
+                = render 'shared/group_accept_form', group: my_group, user: user
+                
+          - if $i % 2 == 0
+            div[style="right=1000px"]

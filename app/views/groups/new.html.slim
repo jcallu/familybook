@@ -1,0 +1,9 @@
+h2
+  | Create A New Group
+= form_for(@group) do |f|
+  div
+    = f.label :name
+    br
+    = f.text_field :name
+  div
+    = f.submit "Submit" , class: 'button'

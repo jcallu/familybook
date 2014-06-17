@@ -1,0 +1,23 @@
+coffee:
+  $(document).ready ->
+    $("#left-menu").sidr
+      name: "sidr-left"
+      side: "left"
+    return
+  window.location.replace "#"
+  history.replaceState {}, "", window.location.href.slice(0, -1)  if typeof window.history.replaceState is "function"
+
+a#left-menu[href="#left_menu"  onclick="if( ($a=$('#find_your_group')).is(':visible')) {$a.toggle();} if( ($b=$('#create_your_group')).is(':visible')) {$b.toggle();} if( ($c=$('#show_your_group')).is(':visible')) {$c.toggle();}" style=" height: 50px; width: 50px"]
+  - if current_user.sign_in_count <= 10
+    span.has-tip data-options="" data-tooltip="" style="" title="<- Click to find your group, create a group, or view your #{ "group".pluralize(@my_groups.count)}."
+      i.fi-results-demographics[style="font-size: 50px"]
+  - else
+    i.fi-results-demographics[style="font-size: 50px"]
+      
+  
+br
+.groups-container
+  = render 'groups/sidr_left'
+  = render 'groups/find_your_group'
+  = render 'groups/create_your_group'
+  = render 'groups/show_your_group'

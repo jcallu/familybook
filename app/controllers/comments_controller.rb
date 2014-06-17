@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:create, :destroy]
 
-  include FamilyHelper
+  include GroupHelper
 
   def create
     @post = Post.find(comments_params['post_id'])
@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
       @comment.user = current_user
       @comment.save
       @activity = PublicActivity::Activity.find(PublicActivity::Activity.where(:trackable_id => @comment.id, :trackable_type => 'Comment').first.id)
-      @activity.family_id = current_family.id
+      @activity.group_id = current_group.id
       @activity.save
       redirect_to root_url
     else

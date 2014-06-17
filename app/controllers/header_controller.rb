@@ -2,11 +2,11 @@ class HeaderController < ApplicationController
   
   before_filter :authenticate_user!
 
-  include FamilyHelper
+  include GroupHelper
 
   def _header
-    @my_families = current_user.family_memberships.collect{|r| r.family}
-    @family = current_family
-    @requests = FamilyMembershiRequest.find_by_family_id(@family.id)
+    @my_groups = current_user.group_memberships.collect{|r| r.group}
+    @group = current_group
+    @requests = GroupMembershiRequest.find_by_group_id(@group.id)
   end
 end

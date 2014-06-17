@@ -1,0 +1,6 @@
+div class="group-#{group.id}-user-#{user.id}" style= 'float:left; padding-left: 20px'
+  div#group_accept_form
+    - unless GroupMembershipRequest.where( :group_id => group.id, :user_id => user.id).empty?
+      = render 'shared/group_accept_received', group: group, user: user
+    - else
+      = render 'shared/group_accept_confirmed', group: group, user: user

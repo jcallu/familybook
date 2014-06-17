@@ -1,0 +1,14 @@
+#create_your_group.hidden              
+ .groups-content
+    br
+    br
+    .user_content_container
+      h4 Create Your Group 
+      div[style="padding-bottom:10px"]
+        = form_for(@group) do |f|
+          .create_your_group
+            = f.label :name
+            br
+            = f.text_field :name
+          div
+            = f.submit "Submit" , class: 'button'

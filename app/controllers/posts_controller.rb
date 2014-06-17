@@ -4,14 +4,14 @@ class PostsController < ApplicationController
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
-  include FamilyHelper
+  include GroupHelper
   # GET /posts
   # GET /posts.json
   def index
     if !user_signed_in?
       redirect_to new_user_session_path
-    elsif !current_user.user_default_family.nil?
-      @posts = Post.all.where(:user_id => family_members(current_family).map{|r| r.id}, :family_id => current_family ).order("created_at desc")
+    elsif !current_user.user_default_group.nil?
+      @posts = Post.all.where(:user_id => group_members(current_group).map{|r| r.id}, :group_id => current_group ).order("created_at desc")
     else
       @posts = Post.all.where(:user_id => 0)
     end
@@ -42,11 +42,11 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    if !current_user.user_default_family.nil? && !post_params['content'].blank?
+    if !current_user.user_default_group.nil? && !post_params['content'].blank?
       @post = Post.new(post_params)
       @post.update_attributes(post_params)
       @post.user = current_user
-      @post.family_id = params[:family] || current_user.user_default_family.id unless current_user.user_default_family.nil?
+      @post.group_id = params[:group] || current_user.user_default_group.id unless current_user.user_default_group.nil?
       unless @post.avatar_file_name.nil?
         @post.avatar_url_thumb = @post.avatar.url(:thumb)
         @post.avatar_url_original = @post.avatar.url(:original)
@@ -64,11 +64,11 @@ class PostsController < ApplicationController
       @post_activities = PublicActivity::Activity.where("trackable_type = 'Post' AND trackable_id = #{@post.id}").pluck(:id).sort!.reverse.drop(1).reverse
       PublicActivity::Activity.destroy(@post_activities)
       @activity = PublicActivity::Activity.find(PublicActivity::Activity.where(:trackable_id => @post.id, :trackable_type => 'Post', :key => 'post.update').first.id)
-      @activity.family_id = current_family.id
+      @activity.group_id = current_group.id
       @activity.save
     else
       respond_to do |format|
-        format.html{ redirect_to root_url, notice: 'Your post was blank or default family not chosen yet, please try again.'}
+        format.html{ redirect_to root_url, notice: 'Your post was blank or default group not chosen yet, please try again.'}
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -97,7 +97,7 @@ class PostsController < ApplicationController
     PublicActivity::Activity.destroy(@post_activites)
 
     @activity = PublicActivity::Activity.find(PublicActivity::Activity.where(:trackable_id => @post.id, :trackable_type => 'Post', :key => 'post.update').first.id)
-    @activity.family_id = current_family.id
+    @activity.group_id = current_group.id
     @activity.save
   end
 
@@ -134,6 +134,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit( :user_id, :content, :avatar, :family_id, :avatar_url_thumb, :avatar_url_original)
+      params.require(:post).permit( :user_id, :content, :avatar, :group_id, :avatar_url_thumb, :avatar_url_original)
     end
 end

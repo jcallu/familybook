@@ -3,7 +3,7 @@ nav.top-bar data-topbar=""
   ul.title-area
     li.name
       a[href="/" style="padding-left: 20px;padding-right: 10px"]
-        img[src="/family-book-logo.png" style="width:42px; height:42px; z-index: 999999"]
+        img[src="/groups-book-logo.png" style="width:42px; height:42px; z-index: 999999"]
     - if user_signed_in?
       li.toggle-topbar
         a[href="#"]
@@ -23,26 +23,26 @@ nav.top-bar data-topbar=""
       ul.right
         li.divider
         li.has-dropdown
-          - if my_families.empty?
+          - if my_groups.empty?
             a
-              span.has-tip data-options="" data-tooltip="" style="" title="#{current_family.nil? ? "Add a family and set your default family." : current_family.name}" = (current_family.nil? ? "No Family" : current_family.name)
-          - if !my_families.empty?
-            = link_to get_family.nil? ? "Choose Your Family" : get_family.name , "#"
+              span.has-tip data-options="" data-tooltip="" style="" title="#{current_group.nil? ? "Add a group and set your default group." : current_group.name}" = (current_group.nil? ? "No Group" : current_group.name)
+          - if !my_groups.empty?
+            = link_to get_group.nil? ? "Choose Your Group" : get_group.name , "#"
             ul.dropdown
               li
-                = link_to "Family Profile", get_family
+                = link_to "Group Profile", get_group
               li
-                = link_to "Family Posts Listing", Post
+                = link_to "Group Posts Listing", Post
               li
-                = link_to "Family Member Requests", 'families/member_requests'
+                = link_to "Group Member Requests", 'groups/member_requests'
               li
                 a
                   = form_tag root_path, :method => :get
-                    = select_tag :family, options_for_select( my_families.collect{|r| [r.name, r.id]} ),  :onchange => "  this.form.submit(); #{set_default_family}" ,:include_blank => true,  :style => "margin-top: 2px; margin-bottom:2px", :class => "select-style"
+                    = select_tag :group, options_for_select( my_groups.collect{|r| [r.name, r.id]} ),  :onchange => "  this.form.submit(); #{set_default_group}" ,:include_blank => true,  :style => "margin-top: 2px; margin-bottom:2px", :class => "select-style"
         li
-          = link_to 'Family Members', users_path
+          = link_to 'Group Members', users_path
         li
-          = link_to 'Families', families_path
+          = link_to 'Groups', groups_path
 
         li.divider
         li

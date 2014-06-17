@@ -15,8 +15,6 @@ class Post < ActiveRecord::Base
 
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
   
-  include FamilyHelper 
-  
   include PublicActivity::Model
   tracked owner: ->(controller, model) { controller && controller.current_user }
 end

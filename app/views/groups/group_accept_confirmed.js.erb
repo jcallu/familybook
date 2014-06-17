@@ -1,0 +1,1 @@
+$('.group-<%= @group.id %>-user-<%=@user.id %> > #group_accept_form').html("<%= escape_javascript(render 'shared/group_accept_confirmed', group: @group, user: @user) %>");

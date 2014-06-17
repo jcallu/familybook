@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20140617074431) do
     t.string   "recipient_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "family_id"
+    t.integer  "group_id"
   end
 
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
@@ -45,29 +45,6 @@ ActiveRecord::Schema.define(version: 20140617074431) do
   add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
-  create_table "families", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-    t.string   "short_name"
-    t.integer  "owner_id"
-    t.integer  "admin_id"
-  end
-
-  create_table "family_membership_requests", force: true do |t|
-    t.integer  "family_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
-  create_table "family_memberships", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-    t.integer  "family_id"
-  end
-
   create_table "follows", force: true do |t|
     t.string   "follower_type"
     t.integer  "follower_id"
@@ -78,6 +55,29 @@ ActiveRecord::Schema.define(version: 20140617074431) do
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
   add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
+
+  create_table "group_membership_requests", force: true do |t|
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  create_table "group_memberships", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.integer  "group_id"
+  end
+
+  create_table "groups", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.string   "short_name"
+    t.integer  "owner_id"
+    t.integer  "admin_id"
+  end
 
   create_table "likes", force: true do |t|
     t.string   "liker_type"
@@ -112,12 +112,12 @@ ActiveRecord::Schema.define(version: 20140617074431) do
     t.datetime "avatar_updated_at"
     t.string   "avatar_url_thumb"
     t.string   "avatar_url_original"
-    t.integer  "family_id"
+    t.integer  "group_id"
   end
 
-  create_table "user_default_families", force: true do |t|
+  create_table "user_default_groups", force: true do |t|
     t.integer  "user_id"
-    t.integer  "family_id"
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

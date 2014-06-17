@@ -1,0 +1,17 @@
+- unless @group.nil?
+  .large-8.columns
+    .right
+      .profile_main_pic
+        = image_tag '/missing.png', class: 'profile'
+    span.left
+      h4
+        = @group.name
+        br
+          = render 'shared/group_request_form', group: @group
+    .profile_space[style="padding-bottom:200px"]
+    .row.feed
+- else
+  - if @group.nil?
+    coffee:
+      location.href = '/'
+

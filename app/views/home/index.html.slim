@@ -1,4 +1,3 @@
 - if user_signed_in?
   = render 'posts/form'
-  - @activities.order("created_at desc").each do |activity|
-     = render_activity(activity)
+  = render 'home/main_feed', activities: @activities
