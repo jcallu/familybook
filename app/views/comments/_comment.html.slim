@@ -7,9 +7,13 @@
       br
     | &nbsp;&nbsp;&nbsp;
     - if current_page?(root_url)
-      .photo_caption
+      .photo_caption[style="width: 97%"]
         = simple_format(comment.content).html_safe
     - else
-      .comment_section
+      .comment_section[style="width: 99.2%"]
         = simple_format(comment.content).html_safe
+    div class="#{comment.class}-#{comment.id}" style="padding-top: 4px"
+      .likes[style="float:left; font-size: 12px"]
+        = pluralize(comment.likers(User).count, 'like')
+      = render 'shared/like_form', likeable: comment    
     div[style="padding-bottom:5px"]

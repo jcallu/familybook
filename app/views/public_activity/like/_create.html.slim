@@ -1,8 +1,8 @@
 - if activity.trackable
   - @post_type_like = "Like"
   - @post_type = "Post"
-  .activity_feed
-    .user-box
+  .activity_feed[style="background: #ecfaff"]
+    .user-box[style="padding-left:5px;"]
       = image_tag activity.owner.avatar_url_thumb, class: 'like_profile'
       .info
         - if activity.owner == current_user
@@ -11,6 +11,13 @@
           = link_to activity.owner.name, activity.owner
         |  liked a&nbsp;
         = link_to activity.trackable.likeable.class, activity.trackable.likeable
-    .like_post.liked_a_post[style="margin-top:-10px"]
-      = render 'posts/post', post: activity.trackable.likeable
+        - if activity.trackable.likeable.class.to_s == "Comment"
+          | &nbsp;in 
+          = link_to "Post", Post.find(activity.trackable.likeable.post_id)
+    - if activity.trackable.likeable.class.to_s== "Post"
+      .like_post.liked_a_post[style="margin-top:-10px"]
+        = render 'posts/post', post: activity.trackable.likeable
+    - else
+      .like_post.liked_a_post[style="margin-top:-10px"]
+        = render 'posts/post', post: Post.find(activity.trackable.likeable.post_id)
   - @post_type = "Post"

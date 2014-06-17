@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140616003725) do
+ActiveRecord::Schema.define(version: 20140617074431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20140616003725) do
     t.string   "recipient_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "family_id"
   end
 
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
@@ -111,6 +112,7 @@ ActiveRecord::Schema.define(version: 20140616003725) do
     t.datetime "avatar_updated_at"
     t.string   "avatar_url_thumb"
     t.string   "avatar_url_original"
+    t.integer  "family_id"
   end
 
   create_table "user_default_families", force: true do |t|

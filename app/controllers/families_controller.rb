@@ -47,10 +47,10 @@ class FamiliesController < ApplicationController
 
   def family_request_sent
     @family = Family.find(params[:family])
-    if current_user.family_membership_requests.where("family_id = #{@family.id}").empty?
+    if current_user.family_membership_requests.where(:family_id => params[:family]).empty?
       family_requested = FamilyMembershipRequest.new
       family_requested.user_id = current_user.id
-      family_requested.family_id = @family.id
+      family_requested.family_id = params[:family]
       family_requested.save
     end
   end
@@ -61,16 +61,24 @@ class FamiliesController < ApplicationController
   
   def family_request_delete
     @family = Family.find(params[:family])
-    family_membership_to_delete = FamilyMembership.where("user_id = #{current_user.id} AND family_id = #{@family.id}")
+    conditions = {:user_id => current_user.id, :family_id => params[:family]}
+    family_membership_to_delete = FamilyMembership.where(conditions)
     unless family_membership_to_delete.empty?
       FamilyMembership.destroy(family_membership_to_delete.map{|r| r.id})
-      UserDefaultFamily.destroy(UserDefaultFamily.where("user_id = #{current_user.id} AND family_id = #{@family.id}").pluck(:id))
+      UserDefaultFamily.destroy(UserDefaultFamily.where(conditions).pluck(:id))
     end
   end
 
   def family_accept_received
     @family = Family.find(params[:family])
     @user = User.find(params[:user])
+    conditions = {:family_id => params[:family], :user_id => params[:user]}
+    if FamilyMembership.where(conditions).empty?
+      @family_membership = FamilyMembership.new(conditions)
+      @family_membership.save
+      current_user.follow!(@user)
+    end
+    FamilyMembershipRequest.where(conditions).first.destroy
   end
 
   def family_accept_confirmed

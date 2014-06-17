@@ -23,16 +23,16 @@ nav.top-bar data-topbar=""
       ul.right
         li.divider
         li.has-dropdown
-          - if my_families.empty? 
+          - if my_families.empty?
             a
               span.has-tip data-options="" data-tooltip="" style="" title="#{current_family.nil? ? "Add a family and set your default family." : current_family.name}" = (current_family.nil? ? "No Family" : current_family.name)
-          - if !my_families.empty? 
+          - if !my_families.empty?
             = link_to get_family.nil? ? "Choose Your Family" : get_family.name , "#"
             ul.dropdown
               li
                 = link_to "Family Profile", get_family
               li
-                = link_to "Family Posts Listing", Post 
+                = link_to "Family Posts Listing", Post
               li
                 = link_to "Family Member Requests", 'families/member_requests'
               li

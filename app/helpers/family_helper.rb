@@ -27,9 +27,9 @@ module FamilyHelper
     end
   end
   
-  def current_user_family
-    family = UserDefaultFamily.find_by_user_id(current_user.id)
-    @current_user_family ||= Family.find(family.family_id) unless family.nil?
+  def current_user_family_id(user)
+    family = UserDefaultFamily.find_by_user_id(user.id)
+    family.nil? ? nil : Family.find(family.family_id).id
   end
   
   def current_user_owner?(family)

@@ -10,7 +10,7 @@ table
       | Post Photo
     th
     th
-  - @posts.order("created_at desc").each do |post|
+  - @posts.each do |post|
     tr
       td
         = post.user.name

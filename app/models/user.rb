@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :families, :through => :family_memberships
 
-  has_one :user_default_family, :through => :family_memberships
+  has_one :user_default_family
 
   acts_as_follower
   acts_as_followable
@@ -31,4 +31,5 @@ class User < ActiveRecord::Base
     :path => "/avatars/users_:id_:style_:filename"
 
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  
 end

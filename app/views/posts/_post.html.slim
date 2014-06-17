@@ -1,40 +1,27 @@
-.user-box
-  = image_tag post.user.avatar_url_thumb, class: 'profile_post', id: 'load-img'
-  | &nbsp; &nbsp;
-  = link_to post.user.name, post.user
-.like_post
-  - unless post.avatar_file_name.nil?
-    .photo_caption
-      = post.content
-    .posted_photo
-      = image_tag post.avatar_url_original
-  - else
-    .post
-      = simple_format(post.content).html_safe
-  br     
-  |  <div class="
-  = post.class
-  | -
-  = post.id
-  | ">
-  = render 'shared/like_form', likeable: post, style: 'font-size:12px;'
-
-= link_to 'Write a comment.', post, class: 'comments', style: 'font-size:12px;margin-left:0px;'
-br
-br
-.comment-link
-  - @post_type = "Post"
-  = link_to pluralize(post.comments.count, 'comment'), post, class: 'comments'
-  - @post_type = "Post"
-  | &nbsp; &nbsp;&nbsp; &nbsp;
-  = pluralize(post.likers(User).count, 'like')
-br
-.comment_in_post[style="padding-left: 12px"]
-  = render post.comments
-
-- unless post.avatar_url_thumb.nil?
-  div[style="padding-bottom: 30px"]
-- else
-  div[style="padding-bottom: 20px"]
-
-- @activity_id = 0
+.post_section_front[style="background: #efefef;margin-left:5px"]
+  .user-box[style="padding-top:5px;padding-left:5px;"]
+    = image_tag post.user.avatar_url_thumb, class: 'profile_post', id: 'load-img'
+    | &nbsp; &nbsp;
+    = link_to post.user.name, post.user
+  .like_post
+    - unless post.avatar_file_name.nil?
+      .photo_caption
+        = post.content
+      .posted_photo
+        = image_tag post.avatar_url_original
+    - else
+      .post
+        = simple_format(post.content).html_safe
+  div class="#{post.class}-#{post.id}" style="padding-top: 4px"
+    .comment-link[style="float:left;padding-left: 5px"]
+      - @post_type = "Post"
+      = link_to "Write a comment. ", post, class: 'comments', style: 'font-size:12px;margin-left:0px;padding-right: 30px'
+      = link_to pluralize(post.comments.count, 'comment'), post, class: 'comments', style: 'font-size:12px;margin-left:0px;padding-right: 10px'
+      - @post_type = "Post"  
+    .likes[style="float:left; font-size: 12px"]
+      | &nbsp;&nbsp;&nbsp;
+      = pluralize(post.likers(User).count, 'like')
+    = render 'shared/like_form', likeable: post
+  br
+  .comment_in_post[style="padding-left: 13px;margin: 20px;background: #f3f8fa"]
+    = render post.comments

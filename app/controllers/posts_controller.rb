@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-  before_filter :authenticate_user! 
+  before_filter :authenticate_user!
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
@@ -8,10 +8,12 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    unless user_signed_in?
+    if !user_signed_in?
       redirect_to new_user_session_path
+    elsif !current_user.user_default_family.nil?
+      @posts = Post.all.where(:user_id => family_members(current_family).map{|r| r.id}, :family_id => current_family ).order("created_at desc")
     else
-      @posts = Post.all.where(:user_id => family_members(current_family).map{|r| r.id} )
+      @posts = Post.all.where(:user_id => 0)
     end
   end
 
@@ -40,19 +42,33 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
-    @post.user = current_user
-    respond_to do |format|
-      if @post.save
-        unless @post.avatar_file_name.nil?
-          @post.avatar_url_thumb = @post.avatar.url(:thumb)
-          @post.avatar_url_original = @post.avatar.url(:original)
-          @post.save
+    if !current_user.user_default_family.nil? && !post_params['content'].blank?
+      @post = Post.new(post_params)
+      @post.update_attributes(post_params)
+      @post.user = current_user
+      @post.family_id = params[:family] || current_user.user_default_family.id unless current_user.user_default_family.nil?
+      unless @post.avatar_file_name.nil?
+        @post.avatar_url_thumb = @post.avatar.url(:thumb)
+        @post.avatar_url_original = @post.avatar.url(:original)
+      end
+      @save = @post.save
+      respond_to do |format|
+        if @save
+          format.html{ redirect_to root_url, notice: 'Post was successfully created.'}
+          format.json { render :show, status: :ok, location: @post }
+        else
+          format.html { render :edit }
+          format.json { render json: @post.errors, status: :unprocessable_entity }
         end
-        format.html { redirect_to root_url, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new }
+      end
+      @post_activities = PublicActivity::Activity.where("trackable_type = 'Post' AND trackable_id = #{@post.id}").pluck(:id).sort!.reverse.drop(1).reverse
+      PublicActivity::Activity.destroy(@post_activities)
+      @activity = PublicActivity::Activity.find(PublicActivity::Activity.where(:trackable_id => @post.id, :trackable_type => 'Post', :key => 'post.update').first.id)
+      @activity.family_id = current_family.id
+      @activity.save
+    else
+      respond_to do |format|
+        format.html{ redirect_to root_url, notice: 'Your post was blank or default family not chosen yet, please try again.'}
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -62,17 +78,27 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1.json
   def update
     post_id = @post.id
+    @post.update_attributes(post_params)
+    unless @post.avatar_file_name.nil?
+      @post.avatar_url_thumb = @post.avatar.url(:thumb)
+      @post.avatar_url_original = @post.avatar.url(:original)
+    end
     respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+      if @post.save
+        format.html { redirect_to @post, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
-    @post_activites = PublicActivity::Activity.where("trackable_type = 'Post' AND trackable_id = #{post_id}").pluck(:id).drop(1)
+
+    @post_activites = PublicActivity::Activity.where("trackable_type = 'Post' AND trackable_id = #{post_id}").pluck(:id).sort!.reverse.drop(1).reverse
     PublicActivity::Activity.destroy(@post_activites)
+
+    @activity = PublicActivity::Activity.find(PublicActivity::Activity.where(:trackable_id => @post.id, :trackable_type => 'Post', :key => 'post.update').first.id)
+    @activity.family_id = current_family.id
+    @activity.save
   end
 
   # DELETE /posts/1
@@ -108,6 +134,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit( :user_id, :content, :avatar)
+      params.require(:post).permit( :user_id, :content, :avatar, :family_id, :avatar_url_thumb, :avatar_url_original)
     end
 end

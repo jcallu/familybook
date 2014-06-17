@@ -1,7 +1,7 @@
 - if activity.trackable
   - @post_type = "Comment"
-  .activity_feed
-    .user-box
+  .activity_feed[style="background: #ecfaff"]
+    .user-box[style="padding-left:5px;"]
       = image_tag activity.owner.avatar_url_thumb, class: 'like_profile'
       .info
         - if activity.owner == current_user
@@ -16,6 +16,4 @@
       br
       - @post_type = "Post"
       = render 'posts/post', post: activity.trackable.post
-
-  div[style="padding-bottom: 10px"]
   - @post_type = "Post"

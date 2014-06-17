@@ -8,7 +8,6 @@ gem 'foundation-rails'
 # app gems
 gem 'devise'
 gem 'socialization'
-gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem "paperclip-dropbox", ">= 1.1.7"
 gem 'public_activity'
 gem 'newrelic_rpm', group: :production
